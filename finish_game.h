@@ -1,7 +1,6 @@
 /* 
  * File:   finish_game.h
  * Author: Awasa
- *
  * Created on 28 de noviembre de 2018, 18:47
  */
 
