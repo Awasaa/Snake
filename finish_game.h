@@ -12,6 +12,6 @@
 #include <allegro5/allegro_font.h> 
 #include <allegro5/allegro_ttf.h>
 
-void close_allegro (ALLEGRO_DISPLAY *, ALLEGRO_FONT *);
+void close_allegro (ALLEGRO_DISPLAY *, ALLEGRO_FONT *);     //Finaliza todos los servicios que se utilizaron de allegro
 
 #endif /* FINISH_GAME_H */

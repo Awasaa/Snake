@@ -16,13 +16,13 @@
 #include <allegro5/allegro_font.h> 
 #include <allegro5/allegro_ttf.h>
 
-#define DISPLAY_W   800
-#define DISPLAY_H   600
+#define DISPLAY_W   800         //Ancho del display
+#define DISPLAY_H   600         //Alto del display
 
-uint8_t init_allegro    (void);
-uint8_t create_display  (ALLEGRO_DISPLAY *);
-uint8_t create_logo     (ALLEGRO_DISPLAY *,ALLEGRO_FONT *);
-void    display_logo    (ALLEGRO_BITMAP *,ALLEGRO_FONT *);
+uint8_t init_allegro    (void);     //Funcion que inicializa todas los sistemas de allegro que se utilizaran
+uint8_t create_display  (ALLEGRO_DISPLAY *);    //Esta funcion inicia exclusivamente el display
+uint8_t create_logo     (ALLEGRO_DISPLAY *,ALLEGRO_FONT *); //Diseño del logo. Fuente y bitmap
+void    display_logo    (ALLEGRO_BITMAP *,ALLEGRO_FONT *);  //Pone en pantalla el diseño del logo
 
 
 #endif /* INIT_GAME_H */
