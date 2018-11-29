@@ -8,9 +8,7 @@
 #define INIT_GAME_H
 
 #include <stdio.h>
-#include <stdlib.h>
 #include <stdint.h>
-#include <stdbool.h>
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_image.h>
 #include <allegro5/allegro_font.h> 
@@ -22,7 +20,6 @@
 uint8_t init_allegro    (void);     //Funcion que inicializa todas los sistemas de allegro que se utilizaran
 uint8_t create_display  (ALLEGRO_DISPLAY *);    //Esta funcion inicia exclusivamente el display
 uint8_t create_logo     (ALLEGRO_DISPLAY *,ALLEGRO_FONT *); //Diseño del logo. Fuente y bitmap
-void    display_logo    (ALLEGRO_BITMAP *,ALLEGRO_FONT *);  //Pone en pantalla el diseño del logo
 
 
 #endif /* INIT_GAME_H */

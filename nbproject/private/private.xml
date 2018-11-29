@@ -7,11 +7,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/gonza/NetBeansProjects/Snake_Game/init_game.c</file>
-            <file>file:/home/gonza/NetBeansProjects/Snake_Game/finish_game.h</file>
-            <file>file:/home/gonza/NetBeansProjects/Snake_Game/finish_game.c</file>
-            <file>file:/home/gonza/NetBeansProjects/Snake_Game/init_game/init_game.h</file>
-            <file>file:/home/gonza/NetBeansProjects/Snake_Game/main.c</file>
+            <file>file:/home/gonzalo/NetBeansProjects/Snake/main.c</file>
+            <file>file:/home/gonzalo/NetBeansProjects/Snake/finish_game.c</file>
+            <file>file:/home/gonzalo/NetBeansProjects/Snake/init_game.c</file>
+            <file>file:/home/gonzalo/NetBeansProjects/Snake/finish_game.h</file>
+            <file>file:/home/gonzalo/NetBeansProjects/Snake/init_game.h</file>
         </group>
     </open-files>
 </project-private>

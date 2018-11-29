@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=Snake_Game
+PROJECTNAME=Snake
 
 # Active Configuration
 DEFAULTCONF=Debug

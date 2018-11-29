@@ -6,6 +6,9 @@
                    projectFiles="true">
       <itemPath>finish_game.h</itemPath>
       <itemPath>init_game.h</itemPath>
+      <itemPath>input.h</itemPath>
+      <itemPath>output.h</itemPath>
+      <itemPath>snake_world.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -16,7 +19,10 @@
                    projectFiles="true">
       <itemPath>finish_game.c</itemPath>
       <itemPath>init_game.c</itemPath>
+      <itemPath>input.c</itemPath>
       <itemPath>main.c</itemPath>
+      <itemPath>output.c</itemPath>
+      <itemPath>snake_world.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
                    displayName="Test Files"
@@ -65,7 +71,19 @@
       </item>
       <item path="init_game.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="input.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="input.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="output.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="output.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="snake_world.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="snake_world.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
     <conf name="Release" type="1">
@@ -96,7 +114,19 @@
       </item>
       <item path="init_game.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="input.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="input.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="output.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="output.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="snake_world.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="snake_world.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
   </confs>

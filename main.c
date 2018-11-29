@@ -6,7 +6,9 @@
 
 #include "init_game.h"
 #include "finish_game.h"
+#include "snake_world.h"
 
+static void admin_game (ALLEGRO_DISPLAY *, ALLEGRO_FONT *);
 
 
 int main(int argc, char** argv) 
@@ -20,7 +22,7 @@ int main(int argc, char** argv)
         {
             if (!create_logo(snake_game,font))      //Creo y muestro el logo
             {
-                printf ("se ejecuto la presentacion\n");
+                admin_game(snake_game,font);
             }
         }
     }
@@ -28,3 +30,16 @@ int main(int argc, char** argv)
     return (EXIT_SUCCESS);
 }
 
+
+void admin_game (ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font)
+{
+        
+    if(!create_world())
+    {
+        if(!create_snake(display))
+        {
+            
+        }
+    }
+
+}

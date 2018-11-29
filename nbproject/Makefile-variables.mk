@@ -9,19 +9,19 @@ CND_DISTDIR=dist
 # Debug configuration
 CND_PLATFORM_Debug=GNU-Linux
 CND_ARTIFACT_DIR_Debug=dist/Debug/GNU-Linux
-CND_ARTIFACT_NAME_Debug=snake_game
-CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/snake_game
+CND_ARTIFACT_NAME_Debug=snake
+CND_ARTIFACT_PATH_Debug=dist/Debug/GNU-Linux/snake
 CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
-CND_PACKAGE_NAME_Debug=snakegame.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/snakegame.tar
+CND_PACKAGE_NAME_Debug=snake.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/snake.tar
 # Release configuration
 CND_PLATFORM_Release=GNU-Linux
 CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
-CND_ARTIFACT_NAME_Release=snake_game
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/snake_game
+CND_ARTIFACT_NAME_Release=snake
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/snake
 CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
-CND_PACKAGE_NAME_Release=snakegame.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/snakegame.tar
+CND_PACKAGE_NAME_Release=snake.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/snake.tar
 #
 # include compiler specific variables
 #
