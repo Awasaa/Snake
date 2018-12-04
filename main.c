@@ -22,7 +22,8 @@ int main(int argc, char** argv)
         {
             if (!create_logo(snake_game,font))      //Creo y muestro el logo
             {
-                admin_game(snake_game,font);
+                //admin_game(snake_game,font);
+                create_menu(snake_game,font);
             }
         }
     }
@@ -34,12 +35,12 @@ int main(int argc, char** argv)
 void admin_game (ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font)
 {
         
-    if(!create_world())
+/*    if(!create_world())
     {
         if(!create_snake(display))
         {
             
         }
-    }
+    }*/
 
 }

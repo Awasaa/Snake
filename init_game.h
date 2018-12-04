@@ -20,7 +20,7 @@
 uint8_t init_allegro    (void);     //Funcion que inicializa todas los sistemas de allegro que se utilizaran
 uint8_t create_display  (ALLEGRO_DISPLAY *);    //Esta funcion inicia exclusivamente el display
 uint8_t create_logo     (ALLEGRO_DISPLAY *,ALLEGRO_FONT *); //Diseño del logo. Fuente y bitmap
-
+uint8_t create_menu     (ALLEGRO_DISPLAY *,ALLEGRO_FONT *);
 
 #endif /* INIT_GAME_H */
 

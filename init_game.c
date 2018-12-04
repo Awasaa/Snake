@@ -5,6 +5,7 @@
  */
 
 #include "init_game.h"
+#include "output.h"
 
 
 uint8_t init_allegro (void)
@@ -51,7 +52,7 @@ uint8_t create_logo (ALLEGRO_DISPLAY *display,ALLEGRO_FONT *font )
     
     //Creo el diseño del logo del juego
       
-    if(!(logo = al_load_bitmap ("itba_logo.png")))
+    if(!(logo = al_load_bitmap ("itba_logo2.jpg")))
     {
         fprintf(stderr,"Creacion de logo erronea \n");  ///Mensaje de error al usuario
         al_destroy_bitmap(logo);    //destruye el bitmap del logo
@@ -67,7 +68,31 @@ uint8_t create_logo (ALLEGRO_DISPLAY *display,ALLEGRO_FONT *font )
         return 1;
     }
         
-    display_logo (logo,font); //Llamo a la funcion que muestra un bitmap y texto en el display
+    display_intro (logo,font,DISPLAY_W,DISPLAY_H); //Llamo a la funcion que muestra un bitmap y texto en el display
     
     return 0;   //Ejecucion exitosa de la funcion  
+}
+
+uint8_t create_menu (ALLEGRO_DISPLAY *display,ALLEGRO_FONT *font )
+{
+    ALLEGRO_BITMAP *menu = NULL;
+    
+    if(!(menu = al_load_bitmap ("menu3.png")))
+    {
+        fprintf(stderr,"Creacion de logo erronea \n");  ///Mensaje de error al usuario
+        al_destroy_bitmap(menu);    //destruye el bitmap del logo
+        al_destroy_display(display);    //Destruye el display
+        al_destroy_font(font);
+        return 1;  //Condicion de salida con error
+    }
+    else if(!(font = al_load_ttf_font("Minecrafter.Reg.ttf",30,0 )))  //Elijo la fuente deseada
+    {
+        fprintf(stderr,"Creacion de fuente erronea \n");
+        al_destroy_bitmap(menu);    //destruye el bitmap del logo
+        al_destroy_display(display);    //Destruye el display
+        al_destroy_font(font);
+        return 1;
+    }
+    display_menu (menu, font, DISPLAY_W, DISPLAY_H);
+    return 0;
 }

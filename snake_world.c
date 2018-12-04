@@ -9,7 +9,7 @@
 void create_world (uint32_t *world, uint16_t widht, uint16_t high)
 {
     uint32_t i = 0;
-    while (i < (widht*(high - 100))
+    while (i < (widht*(high - 100)))
     {
         world[i++] = EMPTY_SPACE;
     }

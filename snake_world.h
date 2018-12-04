@@ -17,7 +17,7 @@
 #define SNAKE_FOOD  2
 
 
-uint8_t create_world    (uint8_t *);    //En esta funcion se crea el diseño del mundo
+void create_world    (uint32_t *, uint16_t, uint16_t);    //En esta funcion se crea el diseño del mundo
 uint8_t create_snake    (ALLEGRO_DISPLAY *);    //En esta funcion se crea el diseño de la serpiente
 
 
