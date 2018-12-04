@@ -9,13 +9,9 @@
         <group>
             <file>file:/home/gonzalo/NetBeansProjects/Snake/snake_world.c</file>
             <file>file:/home/gonzalo/NetBeansProjects/Snake/main.c</file>
-            <file>file:/home/gonzalo/NetBeansProjects/Snake/finish_game.c</file>
-            <file>file:/home/gonzalo/NetBeansProjects/Snake/input.c</file>
-            <file>file:/home/gonzalo/NetBeansProjects/Snake/snake_world.h</file>
             <file>file:/home/gonzalo/NetBeansProjects/Snake/output.h</file>
+            <file>file:/home/gonzalo/NetBeansProjects/Snake/snake_world.h</file>
             <file>file:/home/gonzalo/NetBeansProjects/Snake/init_game.c</file>
-            <file>file:/home/gonzalo/NetBeansProjects/Snake/input.h</file>
-            <file>file:/home/gonzalo/NetBeansProjects/Snake/finish_game.h</file>
             <file>file:/home/gonzalo/NetBeansProjects/Snake/output.c</file>
             <file>file:/home/gonzalo/NetBeansProjects/Snake/init_game.h</file>
         </group>
