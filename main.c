@@ -14,20 +14,21 @@ static void admin_game (ALLEGRO_DISPLAY *, ALLEGRO_FONT *);
 int main(int argc, char** argv) 
 {
     ALLEGRO_DISPLAY *snake_game =  NULL;   //declaro el display
-    ALLEGRO_FONT *font = NULL;  //declaro la fuente
+    ALLEGRO_FONT *font0 = NULL, *font1 = NULL, *font2 = NULL;  //declaro la fuente
+    ALLEGRO_EVENT_QUEUE *event = NULL;
     
     if(!init_allegro())     //Inicializa los servicios de allegro
     {
         if (!create_display(snake_game))    //Creo el display
         {
-            if (!create_logo(snake_game,font))      //Creo y muestro el logo
+            if (!create_logo(snake_game, font0))      //Creo y muestro el logo
             {
                 //admin_game(snake_game,font);
-                create_menu(snake_game,font);
+                create_menu(snake_game,font0,font1,event);
             }
         }
     }
-    close_allegro (snake_game,font);    //Finaliza los servicios de allegro al finalizar el programa
+    // close_allegro (snake_game,font0);    //Finaliza los servicios de allegro al finalizar el programa
     return (EXIT_SUCCESS);
 }
 

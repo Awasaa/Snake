@@ -7,4 +7,9 @@
 #ifndef INPUT_H
 #define INPUT_H
 
+#include <stdint.h>
+#include <allegro5/allegro.h>
+
+void get_keyboard (int32_t *);
+
 #endif /* INPUT_H */

@@ -15,8 +15,9 @@
 
 
 
-void    display_intro   (ALLEGRO_BITMAP *, ALLEGRO_FONT *, uint16_t, uint16_t);  //Pone en pantalla el diseño del logo
-void    display_menu    (ALLEGRO_BITMAP *, ALLEGRO_FONT *, uint16_t, uint16_t);
+void    display_logo    (ALLEGRO_BITMAP *, ALLEGRO_FONT *, uint16_t, uint16_t);  //Pone en pantalla el diseño del logo
+void    display_info    (ALLEGRO_BITMAP *, ALLEGRO_FONT *, uint16_t, uint16_t);
+void    display_menu    (ALLEGRO_BITMAP *, ALLEGRO_FONT *, ALLEGRO_FONT *, uint16_t, uint16_t);
 uint8_t display_world   (ALLEGRO_DISPLAY *);    //Se muestra el mundo en el display
 uint8_t display_snake   (ALLEGRO_DISPLAY *);    //Se muestra la serpiente en el display
 
