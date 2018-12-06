@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include <allegro5/allegro.h>
 
-void get_keyboard (int32_t *);
+void wait_for_key (uint32_t key);
+uint32_t get_keyboard (ALLEGRO_EVENT_QUEUE *);
 
 #endif /* INPUT_H */

@@ -21,13 +21,18 @@ int main(int argc, char** argv)
     {
         if (!create_display(snake_game))    //Creo el display
         {
-            if (!create_logo(snake_game, font0))      //Creo y muestro el logo
+            if (!create_intro(snake_game,font0,font1,font2))      //Creo y muestro el logo
             {
                 //admin_game(snake_game,font);
                 create_menu(snake_game,font0,font1,event);
             }
         }
     }
+    al_destroy_display (snake_game);
+    al_destroy_font (font0);
+    al_destroy_font (font1);
+    al_destroy_font (font2);
+    //al_destroy_event_queue (event);
     // close_allegro (snake_game,font0);    //Finaliza los servicios de allegro al finalizar el programa
     return (EXIT_SUCCESS);
 }
