@@ -34,9 +34,10 @@ void display_info (ALLEGRO_BITMAP *logo, ALLEGRO_FONT *titulo, ALLEGRO_FONT *sub
     al_flip_display();    //Envia al display lo acumulado en el buffer (texto y fondo)                                                                                             al_destroy_font(font);  //Elimina la fuente
 }
 
-void display_menu (ALLEGRO_BITMAP *menu, ALLEGRO_FONT *titulo, ALLEGRO_FONT *opciones, uint16_t width, uint16_t high)
+void display_menu (ALLEGRO_BITMAP *menu, ALLEGRO_FONT *titulo, ALLEGRO_FONT *opciones, uint16_t width, uint16_t high, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3)
 {
     ALLEGRO_COLOR negro = al_map_rgb(0,0,0);
+    ALLEGRO_COLOR rojo = al_map_rgb(255,0,0);
     
     al_draw_scaled_bitmap (menu,0,0,al_get_bitmap_width(menu),al_get_bitmap_height(menu),0,0,width,high,0);
     al_draw_text (titulo, negro, width/2, high/10,ALLEGRO_ALIGN_CENTRE, "SNAKE");
@@ -44,13 +45,8 @@ void display_menu (ALLEGRO_BITMAP *menu, ALLEGRO_FONT *titulo, ALLEGRO_FONT *opc
     al_draw_text (opciones, negro, width/2, high*6/10,ALLEGRO_ALIGN_CENTRE, "Mejores puntajes");
     al_draw_text (opciones, negro, width/2, high*7/10,ALLEGRO_ALIGN_CENTRE, "Opciones");
     al_draw_text (opciones, negro, width/2, high*8/10,ALLEGRO_ALIGN_CENTRE, "Creditos");
-    al_flip_display();
-}
-
-void draw_menu_pointer (uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3)
-{
-    ALLEGRO_COLOR rojo = al_map_rgb(255,0,0);
-    
     al_draw_filled_triangle(x1, y1, x2, y2, x3, y3, rojo);
     al_flip_display();
 }
+
+

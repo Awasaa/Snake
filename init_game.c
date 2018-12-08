@@ -8,7 +8,7 @@
 #include "output.h"
 #include "input.h"
 
-static uint8_t admin_menu      (ALLEGRO_EVENT_QUEUE *);
+static uint8_t admin_menu      (ALLEGRO_BITMAP *,ALLEGRO_FONT *,ALLEGRO_FONT*,ALLEGRO_EVENT_QUEUE *);
 
 
 uint8_t init_allegro (void)
@@ -123,14 +123,14 @@ uint8_t create_menu (ALLEGRO_DISPLAY *display, ALLEGRO_FONT *titulo, \
         return 1;
     }                 
 
-    display_menu (menu, titulo, opciones, DISPLAY_W, DISPLAY_H);
-    admin_menu(event_queue);
+    display_menu (menu, titulo, opciones, DISPLAY_W, DISPLAY_H,DISPLAY_W *0.22, DISPLAY_H *0.5, DISPLAY_W *0.22, DISPLAY_H *0.5 + DISPLAY_H*0.05, DISPLAY_W *0.22 + DISPLAY_W *0.05, DISPLAY_H *0.5 + (DISPLAY_H*0.05)/2);
+    admin_menu(menu, titulo, opciones, event_queue);
     
     al_destroy_bitmap (menu);
     return 0;
 }
 
-static uint8_t admin_menu (ALLEGRO_EVENT_QUEUE *event_queue)
+static uint8_t admin_menu (ALLEGRO_BITMAP *menu, ALLEGRO_FONT *titulo,ALLEGRO_FONT *opciones, ALLEGRO_EVENT_QUEUE *event_queue)
 {
     uint32_t key;
     uint16_t x1 = DISPLAY_W *0.22, y1 = DISPLAY_H *0.5; 
@@ -143,7 +143,7 @@ static uint8_t admin_menu (ALLEGRO_EVENT_QUEUE *event_queue)
         return -1;
     }  
     al_register_event_source(event_queue, al_get_keyboard_event_source());
-    draw_menu_pointer(x1,y1,x2,y2,x3,y3);
+    display_menu(menu, titulo, opciones, DISPLAY_W, DISPLAY_H,x1,y1,x2,y2,x3,y3);
     do
     {
         key = get_keyboard (event_queue);
@@ -153,13 +153,13 @@ static uint8_t admin_menu (ALLEGRO_EVENT_QUEUE *event_queue)
                 y1 += 60;
                 y2 += 60;
                 y3 += 60;
-                draw_menu_pointer(x1,y1,x2,y2,x3,y3);
+                display_menu(menu, titulo, opciones, DISPLAY_W, DISPLAY_H,x1,y1,x2,y2,x3,y3);
                 break;
             case (ALLEGRO_KEY_UP):
                 y1 -= 60;
                 y2 -= 60;
                 y3 -= 60;
-                draw_menu_pointer(x1,y1,x2,y2,x3,y3);
+                display_menu(menu, titulo, opciones, DISPLAY_W, DISPLAY_H,x1,y1,x2,y2,x3,y3);
                 break;         
         }
     }
