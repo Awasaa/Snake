@@ -8,7 +8,7 @@
 #include "finish_game.h"
 #include "snake_world.h"
 
-static void admin_game (ALLEGRO_DISPLAY *, ALLEGRO_FONT *);
+static void admin_game ();
 
 
 int main(int argc, char** argv) 
@@ -25,6 +25,7 @@ int main(int argc, char** argv)
             {
                 //admin_game(snake_game,font);
                 create_menu(snake_game,font0,font1,event);
+                //admin_game();
             }
         }
     }
@@ -38,15 +39,37 @@ int main(int argc, char** argv)
 }
 
 
-void admin_game (ALLEGRO_DISPLAY *display, ALLEGRO_FONT *font)
+void admin_game (void)
 {
-        
-/*    if(!create_world())
+    uint32_t i = 0,cabeza,j = 3;
+    uint16_t world[5000];
+    create_world (world,5,5);
+    
+    while (i < (5*5) )
     {
-        if(!create_snake(display))
-        {
-            
-        }
-    }*/
+        printf ("%d",world[i++]);
+        if (i == 5 || i == 5*2 || i == 5*3 ||  i == 5*4 || i == 5*5 || i == 6*6 || i == 6*7 || i == 6*8 )
+            printf ("\n");
+    }
+    
+    while (j != 0)
+    {
+        cabeza = get_snake_body_part (world,j);
+        refresh_world (world,++cabeza,j);
+        j--;
+    }
+    
+    printf ("\n\n\n");
+    
+    i=0;
+    
+    while (i < (5*5) )
+    {
+        printf ("%d",world[i++]);
+        if (i == 5 || i == 5*2 || i == 5*3 ||  i == 5*4 || i == 5*5 || i == 6*6 || i == 6*7 || i == 6*8 )
+            printf ("\n");
+    }
+    
+    
 
 }

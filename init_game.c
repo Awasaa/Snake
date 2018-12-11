@@ -111,8 +111,8 @@ uint8_t create_menu (ALLEGRO_DISPLAY *display, ALLEGRO_FONT *titulo, \
         al_destroy_event_queue(event_queue);
         return 1;  //Condicion de salida con error
     }
-    else if((!(titulo = al_load_ttf_font("Minecrafter.Reg.ttf",60,0 ))) || \
-            (!(opciones = al_load_ttf_font("Minecrafter.Reg.ttf",30,0))))  //Elijo la fuente deseada
+    else if((!(titulo = al_load_ttf_font("Turtles.otf",60,0 ))) || \
+            (!(opciones = al_load_ttf_font("SuperMario256.ttf",30,0))))  //Elijo la fuente deseada
     {
         fprintf(stderr,"Creacion de fuente erronea \n");
         al_destroy_bitmap(menu);    //destruye el bitmap del logo
