@@ -44,7 +44,7 @@ void display_menu (ALLEGRO_BITMAP *menu, ALLEGRO_FONT *titulo, ALLEGRO_FONT *opc
     al_draw_text (opciones, negro, width/2, high/2,ALLEGRO_ALIGN_CENTRE, "Jugar");
     al_draw_text (opciones, negro, width/2, high*6/10,ALLEGRO_ALIGN_CENTRE, "Mejores puntajes");
     al_draw_text (opciones, negro, width/2, high*7/10,ALLEGRO_ALIGN_CENTRE, "Opciones");
-    al_draw_text (opciones, negro, width/2, high*8/10,ALLEGRO_ALIGN_CENTRE, "Creditos");
+    al_draw_text (opciones, negro, width/2, high*8/10,ALLEGRO_ALIGN_CENTRE, "Salir");
     al_draw_filled_triangle(x1, y1, x2, y2, x3, y3, rojo);
     al_flip_display();
 }
