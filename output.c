@@ -31,7 +31,7 @@ void display_info (ALLEGRO_BITMAP *logo, ALLEGRO_FONT *titulo, ALLEGRO_FONT *sub
     al_draw_text (subtitulo, negro, width*0.32, high*0.79,0, "Magliola, Nicolas ");   //Crea el texto formateado
     al_draw_text (subtitulo, negro, width*0.32, high*0.86,0, "Vacatello, Pablo Daniel ");   //Crea el texto formateado
     al_draw_text (mensaje, gris_claro1, width*0.75, high*0.93,0, "Presione espacio para continuar");   //Crea el texto formateado
-    al_flip_display();    //Envia al display lo acumulado en el buffer (texto y fondo)                                                                                             al_destroy_font(font);  //Elimina la fuente
+    al_flip_display();    //Envia al display lo acumulado en el buffer (texto y fondo)                                                                                            
 }
 
 void display_menu (ALLEGRO_BITMAP *menu, ALLEGRO_FONT *titulo, ALLEGRO_FONT *opciones, uint16_t width, uint16_t high, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3)
@@ -47,6 +47,21 @@ void display_menu (ALLEGRO_BITMAP *menu, ALLEGRO_FONT *titulo, ALLEGRO_FONT *opc
     al_draw_text (opciones, negro, width/2, high*8/10,ALLEGRO_ALIGN_CENTRE, "Salir");
     al_draw_filled_triangle(x1, y1, x2, y2, x3, y3, rojo);
     al_flip_display();
+}
+
+void display_best_score (ALLEGRO_BITMAP *fondo, ALLEGRO_FONT *titulo, ALLEGRO_FONT *ganadores, ALLEGRO_FONT *mensaje,  uint16_t width, uint16_t high, uint8_t *score1, uint8_t *score2, uint8_t *score3)
+{
+    ALLEGRO_COLOR negro = al_map_rgb(0,0,0);
+    ALLEGRO_COLOR gris_claro = al_map_rgb(150,150,150);
+    
+    al_draw_scaled_bitmap(fondo,0,0,al_get_bitmap_width(fondo),al_get_bitmap_height(fondo),0,0,width,high,0);
+    al_draw_text  (titulo, negro, width*0.5, high*0.1,ALLEGRO_ALIGN_CENTRE, "Mejores Puntuaciones");
+    al_draw_text  (mensaje, gris_claro, width*0.70, high*0.95,0, "Presione escape para volver al menu");   //Crea el texto formateado
+    al_draw_textf (ganadores, negro, width*0.5, high*0.5,ALLEGRO_ALIGN_CENTRE, "PRIMER PUESTO : %s",  score1);   //Crea el texto formateado
+    al_draw_textf (ganadores, negro, width*0.5, high*0.6,ALLEGRO_ALIGN_CENTRE, "SEGUNDO PUESTO : %s", score2);   //Crea el texto formateado
+    al_draw_textf (ganadores, negro, width*0.5, high*0.7,ALLEGRO_ALIGN_CENTRE, "TERCER PUESTO : %s",  score3);   //Crea el texto formateado
+
+    al_flip_display();    //Envia al display lo acumulado en el buffer (texto y fondo)                                                                 
 }
 
 

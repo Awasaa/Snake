@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/file_admin.o \
 	${OBJECTDIR}/finish_game.o \
 	${OBJECTDIR}/init_game.o \
 	${OBJECTDIR}/input.o \
@@ -66,6 +67,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/snake: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/snake ${OBJECTFILES} ${LDLIBSOPTIONS}
+
+${OBJECTDIR}/file_admin.o: file_admin.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/file_admin.o file_admin.c
 
 ${OBJECTDIR}/finish_game.o: finish_game.c
 	${MKDIR} -p ${OBJECTDIR}

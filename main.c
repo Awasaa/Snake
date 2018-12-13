@@ -13,20 +13,19 @@ static void admin_game ();
 
 int main(int argc, char** argv) 
 {
+    FILE *options_file;
+    FILE *best_scores;
+    
     ALLEGRO_DISPLAY *snake_game =  NULL;   //declaro el display
     ALLEGRO_FONT *font0 = NULL, *font1 = NULL, *font2 = NULL;  //declaro la fuente
     ALLEGRO_EVENT_QUEUE *event = NULL;
     
-    if(!init_allegro())     //Inicializa los servicios de allegro
-    {
-        if (!create_display(snake_game))    //Creo el display
+    if(!init_allegro()   &&   !create_display(snake_game)   && \
+       !create_intro(snake_game,font0,font1,font2))      //Inicializa los servicios de allegro
+    {                                                    //Crea el display, el logo y la presentacion
+        if(!(create_menu(snake_game,font0,font1,font2,event,options_file,best_scores) == GAME_EXIT))
         {
-            if (!create_intro(snake_game,font0,font1,font2))      //Creo y muestro el logo
-            {
-                //admin_game(snake_game,font);
-                create_menu(snake_game,font0,font1,event);
-                //admin_game();
-            }
+        //admin_game();
         }
     }
     al_destroy_display (snake_game);
