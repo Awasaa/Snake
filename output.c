@@ -41,10 +41,10 @@ void display_menu (ALLEGRO_BITMAP *menu, ALLEGRO_FONT *titulo, ALLEGRO_FONT *opc
     
     al_draw_scaled_bitmap (menu,0,0,al_get_bitmap_width(menu),al_get_bitmap_height(menu),0,0,width,high,0);
     al_draw_text (titulo, negro, width/2, high/10,ALLEGRO_ALIGN_CENTRE, "SNAKE");
-    al_draw_text (opciones, negro, width/2, high/2,ALLEGRO_ALIGN_CENTRE, "Jugar");
-    al_draw_text (opciones, negro, width/2, high*6/10,ALLEGRO_ALIGN_CENTRE, "Mejores puntajes");
-    al_draw_text (opciones, negro, width/2, high*7/10,ALLEGRO_ALIGN_CENTRE, "Opciones");
-    al_draw_text (opciones, negro, width/2, high*8/10,ALLEGRO_ALIGN_CENTRE, "Salir");
+    al_draw_text (opciones, negro, width/2, high*0.5,ALLEGRO_ALIGN_CENTRE, "Jugar");
+    al_draw_text (opciones, negro, width/2, high*0.6,ALLEGRO_ALIGN_CENTRE, "Mejores puntajes");
+    al_draw_text (opciones, negro, width/2, high*0.7,ALLEGRO_ALIGN_CENTRE, "Opciones");
+    al_draw_text (opciones, negro, width/2, high*0.8,ALLEGRO_ALIGN_CENTRE, "Salir");
     al_draw_filled_triangle(x1, y1, x2, y2, x3, y3, rojo);
     al_flip_display();
 }
@@ -64,4 +64,20 @@ void display_best_score (ALLEGRO_BITMAP *fondo, ALLEGRO_FONT *titulo, ALLEGRO_FO
     al_flip_display();    //Envia al display lo acumulado en el buffer (texto y fondo)                                                                 
 }
 
+void display_options (ALLEGRO_BITMAP *options, ALLEGRO_FONT *titulo, ALLEGRO_FONT *opciones, ALLEGRO_FONT *mensaje, uint16_t width, uint16_t high, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3, uint8_t *music, uint8_t *level, uint8_t *resolution, uint8_t *snake_color)
+{
+    ALLEGRO_COLOR violeta = al_map_rgb(170, 40, 140);
+    ALLEGRO_COLOR naranja = al_map_rgb(239, 127, 26);
+    ALLEGRO_COLOR gris_claro = al_map_rgb(150,150,150);
+    
+    al_draw_scaled_bitmap (options,0,0,al_get_bitmap_width(options),al_get_bitmap_height(options),0,0,width,high,0);
+    al_draw_text  (titulo, violeta, width/2, high*0.1,ALLEGRO_ALIGN_CENTRE, "OPCIONES");
+    al_draw_textf (opciones, violeta, width/2, high*0.5,ALLEGRO_ALIGN_CENTRE, "Musica : %s", music);
+    al_draw_textf (opciones, violeta, width/2, high*0.6,ALLEGRO_ALIGN_CENTRE, "Nivel : %s", level);
+    al_draw_textf (opciones, violeta, width/2, high*0.7,ALLEGRO_ALIGN_CENTRE, "Resolucion : %s", resolution);
+    al_draw_textf (opciones, violeta, width/2, high*0.8,ALLEGRO_ALIGN_CENTRE, "Color de Snake : %s", snake_color);
+    al_draw_textf  (mensaje, gris_claro, width*0.70, high*0.95,0, "Presione escape para volver al menu");
+    al_draw_filled_triangle(x1, y1, x2, y2, x3, y3, naranja);
+    al_flip_display();
+}
 

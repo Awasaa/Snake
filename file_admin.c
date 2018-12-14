@@ -13,19 +13,20 @@
 
 #include "file_admin.h"
 
-uint8_t* get_string (FILE *best_scores, uint8_t text[], uint8_t line)
+uint8_t* get_string (uint8_t *file_name,FILE *best_scores, uint8_t array_to_copy[], uint8_t file_line)
 {
     uint8_t *score,i;
-    best_scores = fopen ("best_scores.txt","r");
+    
+    best_scores = fopen (file_name,"r");
     if (best_scores == NULL)
     {
         fprintf (stderr, "El archivo no existe");
     }
     else 
     {
-        for (i = 0; i< line; i++)
+        for (i = 0; i < file_line; i++)
         {
-            score = (fgets(text,100,best_scores));
+            score = (fgets(array_to_copy,100,best_scores));
         }
     }
     fclose (best_scores);

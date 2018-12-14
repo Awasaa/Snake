@@ -15,6 +15,8 @@ static void      move_menu_pointer (uint16_t *, uint16_t *, uint16_t *, uint32_t
 static uint32_t  admin_submenu     (ALLEGRO_FONT *, ALLEGRO_FONT *, ALLEGRO_FONT *,ALLEGRO_EVENT_QUEUE *, FILE *, FILE *,uint16_t *);
 static uint8_t   create_best_score (ALLEGRO_FONT *, ALLEGRO_FONT *, ALLEGRO_FONT *, FILE *);
 static uint8_t   create_options    (ALLEGRO_FONT *, ALLEGRO_FONT *, ALLEGRO_FONT *, ALLEGRO_EVENT_QUEUE *, FILE *);
+static void      admin_options     (ALLEGRO_BITMAP *, ALLEGRO_FONT *, ALLEGRO_FONT *, ALLEGRO_FONT *, ALLEGRO_EVENT_QUEUE *, FILE *);
+static void      set_options       (uint16_t *y_pos, FILE *options_file);
 
 uint8_t init_allegro (void)
 {
@@ -130,7 +132,7 @@ uint8_t create_menu (ALLEGRO_DISPLAY *display, ALLEGRO_FONT *titulo, \
         return 1;
     }                 
 
-    display_menu (menu, titulo, opciones, DISPLAY_W, DISPLAY_H,TRIAN_POINT_X1,TRIAN_POINT_Y1,TRIAN_POINT_X2,TRIAN_POINT_Y2,TRIAN_POINT_X3,TRIAN_POINT_Y3);
+    display_menu(menu, titulo, opciones, DISPLAY_W, DISPLAY_H,TRIAN_POINT_X1,TRIAN_POINT_Y1,TRIAN_POINT_X2,TRIAN_POINT_Y2,TRIAN_POINT_X3,TRIAN_POINT_Y3);
     exit_type = admin_menu(menu, titulo, opciones, mensaje, event_queue, options_file, best_scores);
     
     al_destroy_bitmap (menu);
@@ -143,16 +145,16 @@ static uint32_t admin_menu (ALLEGRO_BITMAP *menu, ALLEGRO_FONT *titulo,ALLEGRO_F
     uint16_t x1 = TRIAN_POINT_X1, y1 = TRIAN_POINT_Y1; 
     uint16_t x2 = TRIAN_POINT_X2, y2 = TRIAN_POINT_Y2;
     uint16_t x3 = TRIAN_POINT_X3, y3 = TRIAN_POINT_Y3;
-    
+ 
     if (!(event_queue = al_create_event_queue()))
     {
         fprintf(stderr, "Creacion de fila de eventos fallida \n");
         al_destroy_event_queue(event_queue);
-        return -1;
+        return 1;
     }  
     
     al_register_event_source(event_queue, al_get_keyboard_event_source());
-    display_menu(menu, titulo, opciones, DISPLAY_W, DISPLAY_H,x1,y1,x2,y2,x3,y3);
+    //display_menu(menu, titulo, opciones, DISPLAY_W, DISPLAY_H,x1,y1,x2,y2,x3,y3);
     
     do
     {
@@ -225,7 +227,6 @@ static uint32_t admin_submenu (ALLEGRO_FONT *titulo, ALLEGRO_FONT *opciones, ALL
 static uint8_t create_best_score(ALLEGRO_FONT *titulo, ALLEGRO_FONT *opciones, ALLEGRO_FONT *mensaje, FILE *best_scores)
 { 
     ALLEGRO_BITMAP *scores = NULL;
-    uint8_t *score1,*score2,*score3;
     uint8_t text1[100],text2[100],text3[100];
     
     if(!(scores = al_load_bitmap ("trofeo.jpg")))
@@ -242,12 +243,8 @@ static uint8_t create_best_score(ALLEGRO_FONT *titulo, ALLEGRO_FONT *opciones, A
         al_destroy_bitmap(scores);    //destruye el bitmap del logo
         return 1;
     }
-    
-    score1 = get_string (best_scores,text1,1);
-    score2 = get_string (best_scores,text2,2);
-    score3 = get_string (best_scores,text3,3);
-    
-    display_best_score (scores, titulo, opciones, mensaje, DISPLAY_W, DISPLAY_H, score1, score2, score3);
+      
+    display_best_score (scores, titulo, opciones, mensaje, DISPLAY_W, DISPLAY_H, get_string ("best_scores.txt",best_scores,text1,1), get_string("best_scores.txt",best_scores,text2,2), get_string ("best_scores.txt",best_scores,text3,3));
     wait_for_key(ALLEGRO_KEY_ESCAPE);
     
     al_destroy_bitmap(scores);
@@ -257,24 +254,76 @@ static uint8_t create_best_score(ALLEGRO_FONT *titulo, ALLEGRO_FONT *opciones, A
 static uint8_t create_options(ALLEGRO_FONT *titulo, ALLEGRO_FONT *opciones, ALLEGRO_FONT *mensaje, ALLEGRO_EVENT_QUEUE *event_queue, FILE *options_file)
 { 
     ALLEGRO_BITMAP *options = NULL;
+    uint8_t  text1[100],text2[100],text3[100],text4[100];
     
-    if(!(options = al_load_bitmap ("menu3.png")))
+    if(!(options = al_load_bitmap ("engranajes.jpg")))
     {
         fprintf(stderr,"Creacion de logo erronea \n");  ///Mensaje de error al usuario
         al_destroy_bitmap(options);    //destruye el bitmap del logo
-        al_destroy_font(titulo);
-        al_destroy_font(opciones);
-        al_destroy_event_queue(event_queue);
         return 1;  //Condicion de salida con error
     }
     else if((!(titulo = al_load_ttf_font("Turtles.otf",60,0 ))) || \
-            (!(opciones = al_load_ttf_font("SuperMario256.ttf",30,0))))  //Elijo la fuente deseada
+            (!(opciones = al_load_ttf_font("SuperMario256.ttf",30,0)))  || \
+            (!(mensaje = al_load_ttf_font("Spongeboy.ttf",10,0))))  //Elijo la fuente deseada
     {
         fprintf(stderr,"Creacion de fuente erronea \n");
         al_destroy_bitmap(options);    //destruye el bitmap del logo
-        al_destroy_font(titulo);
-        al_destroy_font(opciones);
-        al_destroy_event_queue(event_queue);
         return 1;
     }
+    
+    display_options(options, titulo, opciones, mensaje, DISPLAY_W, DISPLAY_H,TRIAN_POINT_X1B,TRIAN_POINT_Y1,TRIAN_POINT_X2B,TRIAN_POINT_Y2,TRIAN_POINT_X3B,TRIAN_POINT_Y3,get_string ("config.txt",options_file,text1,1),get_string ("config.txt",options_file,text2,2),get_string ("config.txt",options_file,text3,3),get_string ("config.txt",options_file,text4,4));
+    admin_options(options,titulo,opciones,mensaje,event_queue,options_file);
+}
+
+
+static void admin_options(ALLEGRO_BITMAP *options,ALLEGRO_FONT *titulo, ALLEGRO_FONT *opciones, ALLEGRO_FONT *mensaje, ALLEGRO_EVENT_QUEUE *event_queue, FILE *options_file)
+{
+    uint32_t key;
+    uint16_t x1 = TRIAN_POINT_X1B, y1 = TRIAN_POINT_Y1;
+    uint16_t x2 = TRIAN_POINT_X2B, y2 = TRIAN_POINT_Y2;
+    uint16_t x3 = TRIAN_POINT_X3B, y3 = TRIAN_POINT_Y3;
+    uint8_t  text1[100],text2[100],text3[100],text4[100];
+    
+    do
+    {
+        key = get_keyboard (event_queue);
+        switch (key)
+        {
+            case (ALLEGRO_KEY_DOWN):
+                move_menu_pointer (&y1,&y2,&y3,key);
+                display_options(options, titulo, opciones, mensaje, DISPLAY_W, DISPLAY_H,x1,y1,x2,y2,x3,y3,get_string ("config.txt",options_file,text1,1),get_string ("config.txt",options_file,text2,2),get_string ("config.txt",options_file,text3,3),get_string ("config.txt",options_file,text4,4));
+                break;
+            case (ALLEGRO_KEY_UP):
+                move_menu_pointer (&y1,&y2,&y3,key);
+                display_options(options, titulo, opciones, mensaje, DISPLAY_W, DISPLAY_H,x1,y1,x2,y2,x3,y3,get_string ("config.txt",options_file,text1,1),get_string ("config.txt",options_file,text2,2),get_string ("config.txt",options_file,text3,3),get_string ("config.txt",options_file,text4,4));
+                break; 
+            case (ALLEGRO_KEY_ENTER):
+                set_options (&y1,options_file);
+                break;
+            default:
+                display_options(options, titulo, opciones, mensaje, DISPLAY_W, DISPLAY_H,x1,y1,x2,y2,x3,y3,get_string ("config.txt",options_file,text1,1),get_string ("config.txt",options_file,text2,2),get_string ("config.txt",options_file,text3,3),get_string ("config.txt",options_file,text4,4));
+                break;    
+        }
+    }
+    while (key != ALLEGRO_KEY_ESCAPE );
+}
+
+static void set_options (uint16_t *y_pos, FILE *options_file)
+{
+        if (*y_pos == TRIAN_POINT_Y1)
+        {
+            
+        }
+        else if (*y_pos == TRIAN_POINT_Y1_ONE_STEP)
+        {
+                
+        }
+        else if (*y_pos == TRIAN_POINT_Y1_TWO_STEP)
+        {
+            
+        }
+        else if (*y_pos == TRIAN_POINT_Y1_EXT_DOWN)
+        {
+            
+        }   
 }
