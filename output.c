@@ -66,7 +66,7 @@ void display_best_score (ALLEGRO_BITMAP *fondo, ALLEGRO_FONT *titulo, ALLEGRO_FO
 
 void display_options (ALLEGRO_BITMAP *options, ALLEGRO_FONT *titulo, ALLEGRO_FONT *opciones, ALLEGRO_FONT *mensaje, uint16_t width, uint16_t high, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3, uint8_t *music, uint8_t *level, uint8_t *resolution, uint8_t *snake_color)
 {
-    ALLEGRO_COLOR violeta = al_map_rgb(170, 40, 140);
+    ALLEGRO_COLOR violeta = al_map_rgb(200, 30, 140);
     ALLEGRO_COLOR naranja = al_map_rgb(239, 127, 26);
     ALLEGRO_COLOR gris_claro = al_map_rgb(150,150,150);
     

@@ -13,7 +13,7 @@ static void admin_game ();
 
 int main(int argc, char** argv) 
 {
-    FILE *options_file;
+    FILE *options_files;
     FILE *best_scores;
     
     ALLEGRO_DISPLAY *snake_game =  NULL;   //declaro el display
@@ -23,7 +23,7 @@ int main(int argc, char** argv)
     if(!init_allegro()   &&   !create_display(snake_game)   && \
        !create_intro(snake_game,font0,font1,font2))      //Inicializa los servicios de allegro
     {                                                    //Crea el display, el logo y la presentacion
-        if(!(create_menu(snake_game,font0,font1,font2,event,options_file,best_scores) == GAME_EXIT))
+        if(!(create_menu(snake_game,font0,font1,font2,event,options_files,best_scores) == GAME_EXIT))
         {
         //admin_game();
         }
@@ -33,7 +33,7 @@ int main(int argc, char** argv)
     al_destroy_font (font1);
     al_destroy_font (font2);
     //al_destroy_event_queue (event);
-    // close_allegro (snake_game,font0);    //Finaliza los servicios de allegro al finalizar el programa
+    //close_allegro (snake_game,font0);    //Finaliza los servicios de allegro al finalizar el programa
     return (EXIT_SUCCESS);
 }
 
@@ -42,33 +42,7 @@ void admin_game (void)
 {
     uint32_t i = 0,cabeza,j = 3;
     uint16_t world[5000];
-    create_world (world,5,5);
-    
-    while (i < (5*5) )
-    {
-        printf ("%d",world[i++]);
-        if (i == 5 || i == 5*2 || i == 5*3 ||  i == 5*4 || i == 5*5 || i == 6*6 || i == 6*7 || i == 6*8 )
-            printf ("\n");
-    }
-    
-    while (j != 0)
-    {
-        cabeza = get_snake_body_part (world,j);
-        refresh_world (world,++cabeza,j);
-        j--;
-    }
-    
-    printf ("\n\n\n");
-    
-    i=0;
-    
-    while (i < (5*5) )
-    {
-        printf ("%d",world[i++]);
-        if (i == 5 || i == 5*2 || i == 5*3 ||  i == 5*4 || i == 5*5 || i == 6*6 || i == 6*7 || i == 6*8 )
-            printf ("\n");
-    }
-    
+   
     
 
 }
