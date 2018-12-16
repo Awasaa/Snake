@@ -74,9 +74,10 @@ static uint16_t* search_for_in_world (uint16_t snake_world [MAX_SIZE_X][MAX_SIZE
 static uint8_t admin_move (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y],uint16_t *snake_head_first_ubication ,uint16_t *previous_body_part_ubication,uint16_t *body_part_ubication,uint16_t body_part,uint32_t direction)
 {
     bool crash = false;
-    uint16_t cont = 1,event;
+    static uint16_t cont = 1, cont2 = 0;
+    uint16_t event;
     
-    while   (body_part != END_OF_SNAKE+1)
+    while   (body_part != END_OF_SNAKE+cont)
     {
         if (body_part == SNAKE_HEAD)
         {
@@ -86,6 +87,10 @@ static uint8_t admin_move (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y],uint16_t
             {
                 crash = true;
             }
+            //if( event == ATE)
+            //{
+            //    cont++;
+            //}
             snake_head_first_ubication = body_part_ubication;
         }
         else 
@@ -105,7 +110,16 @@ static uint8_t admin_move (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y],uint16_t
         }
         body_part++;
     }
-    *body_part_ubication = EMPTY_SPACE;
+   // if (event == ATE)
+    //{
+     //   *body_part_ubication = END_OF_SNAKE+cont2;
+   //     cont2++;
+    //}
+    //else
+    //{
+        *body_part_ubication = EMPTY_SPACE;
+    //}
+    
     //printf ("\n%d\n",cont);
     
     return crash;
