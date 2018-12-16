@@ -7,19 +7,24 @@
 #include "snake_world.h"
 
 static uint16_t* search_for_in_world  (uint16_t [MAX_SIZE_X][MAX_SIZE_Y], uint16_t);
-static void      admin_move           (uint16_t [MAX_SIZE_X][MAX_SIZE_Y],uint16_t * ,uint16_t *,uint16_t *,uint16_t,uint32_t);
-static void      move_snake_head      (uint16_t* , uint16_t);
+static uint8_t   admin_move           (uint16_t [MAX_SIZE_X][MAX_SIZE_Y],uint16_t * ,uint16_t *,uint16_t *,uint16_t,uint32_t);
+static uint8_t   move_snake_head      (uint16_t* , uint16_t);
 static void      move_snake_body      (uint16_t*, uint16_t);
 static void      put_food             (uint16_t [MAX_SIZE_X][MAX_SIZE_Y]);
+static uint8_t   check_next_step      (uint16_t*,uint16_t);
 
 
-void game_logic (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y], uint32_t direction)
+void game_logic (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y], uint32_t direction, uint32_t *last_presser_valid_key)
 {
     uint16_t *snake_head_first_ubication = NULL, *previous_body_part_ubication = NULL;
     uint16_t *body_part_ubication = NULL;
     uint16_t  body_part = SNAKE_HEAD ;
     
-    admin_move (snake_world,snake_head_first_ubication,previous_body_part_ubication,body_part_ubication,body_part,direction);
+    if (admin_move (snake_world,snake_head_first_ubication,previous_body_part_ubication,body_part_ubication,body_part,direction))
+    {
+        create_world(snake_world);
+        *last_presser_valid_key = RIGHT;
+    }
     put_food (snake_world);
 }
 
@@ -66,14 +71,21 @@ static uint16_t* search_for_in_world (uint16_t snake_world [MAX_SIZE_X][MAX_SIZE
     return part_pos;
 }
 
-static void admin_move (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y],uint16_t *snake_head_first_ubication ,uint16_t *previous_body_part_ubication,uint16_t *body_part_ubication,uint16_t body_part,uint32_t direction)
+static uint8_t admin_move (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y],uint16_t *snake_head_first_ubication ,uint16_t *previous_body_part_ubication,uint16_t *body_part_ubication,uint16_t body_part,uint32_t direction)
 {
-    while   (body_part != (END_OF_SNAKE+1))
+    bool crash = false;
+    uint16_t cont = 1,event;
+    
+    while   (body_part != END_OF_SNAKE+1)
     {
         if (body_part == SNAKE_HEAD)
         {
             body_part_ubication = search_for_in_world(snake_world,body_part);
-            move_snake_head (body_part_ubication,direction);
+            event = move_snake_head (body_part_ubication,direction);
+            if( event == CRASH)
+            {
+                crash = true;
+            }
             snake_head_first_ubication = body_part_ubication;
         }
         else 
@@ -94,27 +106,50 @@ static void admin_move (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y],uint16_t *s
         body_part++;
     }
     *body_part_ubication = EMPTY_SPACE;
+    //printf ("\n%d\n",cont);
     
+    return crash;
 }
 
-static void move_snake_head ( uint16_t* body_part_ubication,uint16_t direction )
+static uint8_t move_snake_head ( uint16_t* body_part_ubication,uint16_t direction )
 {
     uint16_t* copy_of_body_part = body_part_ubication;
     switch (direction)
     {
         case (RIGHT):
-            *(copy_of_body_part+1) = *body_part_ubication;
+            if(!check_next_step(copy_of_body_part+1,WALL))  
+                *(copy_of_body_part+1) = *body_part_ubication;
+            else
+                return CRASH;
+            if(!check_next_step(copy_of_body_part+1,SNAKE_FOOD))
+                return ATE;
             break;
         case (LEFT):
-            *(copy_of_body_part-1) = *body_part_ubication;
-            break; 
+            if(!check_next_step(copy_of_body_part-1,WALL))  
+                *(copy_of_body_part-1) = *body_part_ubication;
+            else
+                return CRASH;
+            if(!check_next_step(copy_of_body_part-1,SNAKE_FOOD))
+                return ATE;
+            break;
         case (DOWN):
-            *(copy_of_body_part+MAX_SIZE_X) = *body_part_ubication;
+            if(!check_next_step(copy_of_body_part+MAX_SIZE_X,WALL))
+                *(copy_of_body_part+MAX_SIZE_X) = *body_part_ubication;
+            else
+                return CRASH;
+            if(!check_next_step(copy_of_body_part+MAX_SIZE_X,SNAKE_FOOD))
+                return ATE;
             break;
         case (UP):
-            *(copy_of_body_part-MAX_SIZE_X) = *body_part_ubication; 
+            if(!check_next_step(copy_of_body_part-MAX_SIZE_X,WALL))
+                *(copy_of_body_part-MAX_SIZE_X) = *body_part_ubication;
+            else
+                return 1;
+            if(!check_next_step(copy_of_body_part-MAX_SIZE_X,SNAKE_FOOD))
+                return ATE;
             break;
-    }            
+    } 
+    return 0;
 }
 
 static void move_snake_body (uint16_t* previous_body_part_ubication, uint16_t body_part)
@@ -141,4 +176,18 @@ static void put_food (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y])
         snake_world[i][j] = SNAKE_FOOD;   
     }   
 }
+
+static uint8_t check_next_step (uint16_t* next_pos,uint16_t next_step_thing)
+{
+    bool thing;
+    if ((*next_pos) == next_step_thing)
+    {
+        thing = true;
+    }
+    else
+    {
+        thing = false;
+    }
     
+    return thing;
+}

@@ -28,7 +28,7 @@ uint8_t admin_game (FILE *options_files, FILE *best_scores,ALLEGRO_EVENT_QUEUE *
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_BITMAP  *background = NULL;
   
-    static uint32_t last_pressed_valid_key = RIGHT;
+    uint32_t last_pressed_valid_key = RIGHT;
     uint32_t key;
     uint16_t snake_world [MAX_SIZE_X][MAX_SIZE_Y];
     uint16_t width, high;
@@ -61,23 +61,23 @@ uint8_t admin_game (FILE *options_files, FILE *best_scores,ALLEGRO_EVENT_QUEUE *
         switch (key)
         {
             case (ALLEGRO_KEY_RIGHT) :
-                game_logic (snake_world,RIGHT);
+                game_logic (snake_world,RIGHT,&last_pressed_valid_key);
                 last_pressed_valid_key = RIGHT;
                 break;
             case (ALLEGRO_KEY_LEFT) :
-                game_logic (snake_world,LEFT);
+                game_logic (snake_world,LEFT,&last_pressed_valid_key);
                 last_pressed_valid_key = LEFT;
                 break;
             case (ALLEGRO_KEY_DOWN) :
-                game_logic (snake_world,DOWN);
+                game_logic (snake_world,DOWN,&last_pressed_valid_key);
                 last_pressed_valid_key = DOWN;
                 break;
             case (ALLEGRO_KEY_UP) :
-                game_logic (snake_world,UP);
+                game_logic (snake_world,UP,&last_pressed_valid_key);
                 last_pressed_valid_key = UP;
                 break;   
             default:
-                game_logic (snake_world,last_pressed_valid_key);
+                game_logic (snake_world,last_pressed_valid_key,&last_pressed_valid_key);
         }
         admin_display_world (background,snake_world,width,high);
         delay(options_files);

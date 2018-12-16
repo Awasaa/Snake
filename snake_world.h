@@ -8,6 +8,7 @@
 #define SNAKE_WORLD_H
 
 #include <stdio.h>
+#include <stdbool.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <time.h>
@@ -32,10 +33,13 @@
 #define RIGHT_WALL_SPACE        (MAX_WORLD_WIDTH+1)
 #define TOP_WALL_SPACE          (MIN_WORLD_HIGH-1)          
 #define BOTTOM_WALL_SPACE       (MAX_WORLD_HIGH+1)
+#define CRASH                   (1)
+#define ATE                     (2)
+
 
 enum {RIGHT,LEFT,UP,DOWN};
 
-void game_logic   (uint16_t [MAX_SIZE_X][MAX_SIZE_Y], uint32_t);
+void game_logic   (uint16_t [MAX_SIZE_X][MAX_SIZE_Y], uint32_t, uint32_t*);
 void create_world (uint16_t snake_world [MAX_SIZE_X][MAX_SIZE_Y]);
 
 
