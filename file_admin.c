@@ -7,7 +7,7 @@
 #include "file_admin.h"
 
 
-uint8_t* get_string (uint8_t *file_name,FILE *file, uint8_t array_copied[])
+uint8_t* read_config (uint8_t *file_name,FILE *file, uint8_t array_copied[])
 {
     uint8_t *score,i;
     

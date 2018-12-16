@@ -35,11 +35,12 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/admin_game.o \
 	${OBJECTDIR}/file_admin.o \
-	${OBJECTDIR}/finish_game.o \
 	${OBJECTDIR}/init_game.o \
 	${OBJECTDIR}/input.o \
 	${OBJECTDIR}/main.o \
+	${OBJECTDIR}/menus.o \
 	${OBJECTDIR}/output.o \
 	${OBJECTDIR}/snake_world.o
 
@@ -68,15 +69,15 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/snake: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/snake ${OBJECTFILES} ${LDLIBSOPTIONS}
 
+${OBJECTDIR}/admin_game.o: admin_game.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/admin_game.o admin_game.c
+
 ${OBJECTDIR}/file_admin.o: file_admin.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/file_admin.o file_admin.c
-
-${OBJECTDIR}/finish_game.o: finish_game.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/finish_game.o finish_game.c
 
 ${OBJECTDIR}/init_game.o: init_game.c
 	${MKDIR} -p ${OBJECTDIR}
@@ -92,6 +93,11 @@ ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+
+${OBJECTDIR}/menus.o: menus.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/menus.o menus.c
 
 ${OBJECTDIR}/output.o: output.c
 	${MKDIR} -p ${OBJECTDIR}

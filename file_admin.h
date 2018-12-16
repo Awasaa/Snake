@@ -40,7 +40,9 @@
 
 
 
-uint8_t* get_string (uint8_t *, FILE *, uint8_t *);
-uint8_t modify_config (uint8_t *, FILE *, uint8_t *);
+
+uint8_t* read_config            (uint8_t *, FILE *, uint8_t *);
+uint8_t  modify_config          (uint8_t *, FILE *, uint8_t *);
+
 
 #endif /* FILE_ADMIN_H */
