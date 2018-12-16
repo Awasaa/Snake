@@ -74,10 +74,9 @@ static uint16_t* search_for_in_world (uint16_t snake_world [MAX_SIZE_X][MAX_SIZE
 static uint8_t admin_move (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y],uint16_t *snake_head_first_ubication ,uint16_t *previous_body_part_ubication,uint16_t *body_part_ubication,uint16_t body_part,uint32_t direction)
 {
     bool crash = false;
-    static uint16_t cont = 1, cont2 = 0;
-    uint16_t event;
+    uint16_t event = false;
     
-    while   (body_part != END_OF_SNAKE+cont)
+    while   (body_part != END_OF_SNAKE+1)
     {
         if (body_part == SNAKE_HEAD)
         {
@@ -87,10 +86,6 @@ static uint8_t admin_move (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y],uint16_t
             {
                 crash = true;
             }
-            //if( event == ATE)
-            //{
-            //    cont++;
-            //}
             snake_head_first_ubication = body_part_ubication;
         }
         else 
@@ -110,17 +105,17 @@ static uint8_t admin_move (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y],uint16_t
         }
         body_part++;
     }
-   // if (event == ATE)
-    //{
-     //   *body_part_ubication = END_OF_SNAKE+cont2;
-   //     cont2++;
-    //}
-    //else
-    //{
+    if (event == ATE)
+    {
+        move_snake_body (previous_body_part_ubication,body_part);
+        *body_part_ubication = END_OF_SNAKE;
+    }
+    else
+    {
         *body_part_ubication = EMPTY_SPACE;
-    //}
+    }
     
-    //printf ("\n%d\n",cont);
+    //printf ("\n%d\n",event);
     
     return crash;
 }
@@ -131,36 +126,43 @@ static uint8_t move_snake_head ( uint16_t* body_part_ubication,uint16_t directio
     switch (direction)
     {
         case (RIGHT):
-            if(!check_next_step(copy_of_body_part+1,WALL))  
+            if(!check_next_step(copy_of_body_part+1,WALL)) 
+            {
                 *(copy_of_body_part+1) = *body_part_ubication;
+            }
             else
+            {
                 return CRASH;
-            if(!check_next_step(copy_of_body_part+1,SNAKE_FOOD))
-                return ATE;
+            }
+           // else if(check_next_step(copy_of_body_part+1,SNAKE_FOOD))
+            //{
+                //printf ("%d",check_next_step(copy_of_body_part+1,SNAKE_FOOD));
+                //return ATE;
+            //}
             break;
         case (LEFT):
             if(!check_next_step(copy_of_body_part-1,WALL))  
                 *(copy_of_body_part-1) = *body_part_ubication;
             else
                 return CRASH;
-            if(!check_next_step(copy_of_body_part-1,SNAKE_FOOD))
-                return ATE;
+            /*if(check_next_step(copy_of_body_part-1,SNAKE_FOOD))
+                return ATE;*/
             break;
         case (DOWN):
             if(!check_next_step(copy_of_body_part+MAX_SIZE_X,WALL))
                 *(copy_of_body_part+MAX_SIZE_X) = *body_part_ubication;
             else
                 return CRASH;
-            if(!check_next_step(copy_of_body_part+MAX_SIZE_X,SNAKE_FOOD))
-                return ATE;
+           /* if(check_next_step(copy_of_body_part+MAX_SIZE_X,SNAKE_FOOD))
+                return ATE;*/
             break;
         case (UP):
             if(!check_next_step(copy_of_body_part-MAX_SIZE_X,WALL))
                 *(copy_of_body_part-MAX_SIZE_X) = *body_part_ubication;
             else
                 return 1;
-            if(!check_next_step(copy_of_body_part-MAX_SIZE_X,SNAKE_FOOD))
-                return ATE;
+            /*if(check_next_step(copy_of_body_part-MAX_SIZE_X,SNAKE_FOOD))
+                return ATE;*/
             break;
     } 
     return 0;
@@ -197,6 +199,7 @@ static uint8_t check_next_step (uint16_t* next_pos,uint16_t next_step_thing)
     if ((*next_pos) == next_step_thing)
     {
         thing = true;
+        printf ("%d",thing);
     }
     else
     {

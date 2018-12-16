@@ -134,9 +134,9 @@ static void    admin_display_world  (ALLEGRO_BITMAP *background, uint16_t snake_
     ALLEGRO_COLOR color2 = al_map_rgb (0,0,255);
     
     display_world (background,width,high);
-    for(i = MIN_WORLD_WIDTH; i <= MAX_WORLD_WIDTH; i++)			
+    for(i = MIN_WORLD_WIDTH; i <= MAX_WORLD_WIDTH+2; i++)			
     {
-        for(j = MIN_WORLD_HIGH; j <= MAX_WORLD_HIGH; j++)
+        for(j = MIN_WORLD_HIGH; j <= MAX_WORLD_HIGH+2; j++)
         {
             if(snake_world[i][j] >= SNAKE_HEAD && snake_world[i][j] <= END_OF_SNAKE)
             {
@@ -153,14 +153,14 @@ static void    admin_display_world  (ALLEGRO_BITMAP *background, uint16_t snake_
         }
     }
   
-	for (i=1; i<20;i++)
+	/*for (i=1; i<20;i++)
     	{
        		for(j=1; j<20; j++)
        		 {
 		 	printf (" %d ",snake_world [i][j]);   
       		 }
 	printf ("\n");
-	}		
+	}*/		
 
 }
   
