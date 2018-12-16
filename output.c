@@ -89,9 +89,9 @@ void display_world (ALLEGRO_BITMAP *background,uint16_t width, uint16_t high)
 
 
 
-void display_snake(ALLEGRO_BITMAP *background,uint16_t body_part, uint16_t width, uint16_t high, uint16_t snake_head, uint16_t pos_y, uint16_t pos_x, uint16_t div_x, uint16_t div_y)
+void display_snake(ALLEGRO_BITMAP *background,uint16_t body_part, uint16_t width, uint16_t high, uint16_t snake_head, uint16_t pos_y, uint16_t pos_x, uint16_t div_x, uint16_t div_y,ALLEGRO_COLOR color)
 { 
-    al_draw_filled_circle   (((width/div_x)*pos_x)/2 , ((high/div_y)*pos_y)/2 , (high/div_y)/2 , al_map_rgb (0,0,0));
+    al_draw_filled_circle   (((width/div_x)*pos_x)/2 , ((high/div_y)*pos_y)/2 , (high/div_y)/2 , color);
     al_flip_display();    
 }
 

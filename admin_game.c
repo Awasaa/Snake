@@ -17,17 +17,18 @@
 #include "file_admin.h"
 #include "input.h"
 
-static uint8_t create_display       (ALLEGRO_DISPLAY *, uint16_t, uint16_t);
-static void    get_resolution       (FILE *, uint16_t *,uint16_t *);
-static void    delay                (FILE *);
-static void    admin_display_world  (ALLEGRO_BITMAP *, uint16_t [MAX_SIZE_X][MAX_SIZE_Y], uint16_t, uint16_t);
-
+static uint8_t  create_display       (ALLEGRO_DISPLAY *, uint16_t, uint16_t);
+static void     get_resolution       (FILE *, uint16_t *,uint16_t *);
+static void     delay                (FILE *);
+static void     admin_display_world  (ALLEGRO_BITMAP *, uint16_t [MAX_SIZE_X][MAX_SIZE_Y], uint16_t, uint16_t);
+static uint32_t check_key            (uint32_t, uint32_t);
 
 uint8_t admin_game (FILE *options_files, FILE *best_scores,ALLEGRO_EVENT_QUEUE *event_queue)
 {
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_BITMAP  *background = NULL;
   
+    static uint32_t last_pressed_valid_key = RIGHT;
     uint32_t key;
     uint16_t snake_world [MAX_SIZE_X][MAX_SIZE_Y];
     uint16_t width, high;
@@ -48,11 +49,36 @@ uint8_t admin_game (FILE *options_files, FILE *best_scores,ALLEGRO_EVENT_QUEUE *
     }
     al_register_event_source(event_queue, al_get_keyboard_event_source());
     
+    srand(time(NULL));
     create_world (snake_world);
     do
     {
         key = get_keyboard(event_queue);
-        game_logic (snake_world,32);
+        if ((key = check_key (key,last_pressed_valid_key)) == ANY_KEY)
+        {
+            al_flush_event_queue(event_queue);
+        }
+        switch (key)
+        {
+            case (ALLEGRO_KEY_RIGHT) :
+                game_logic (snake_world,RIGHT);
+                last_pressed_valid_key = RIGHT;
+                break;
+            case (ALLEGRO_KEY_LEFT) :
+                game_logic (snake_world,LEFT);
+                last_pressed_valid_key = LEFT;
+                break;
+            case (ALLEGRO_KEY_DOWN) :
+                game_logic (snake_world,DOWN);
+                last_pressed_valid_key = DOWN;
+                break;
+            case (ALLEGRO_KEY_UP) :
+                game_logic (snake_world,UP);
+                last_pressed_valid_key = UP;
+                break;   
+            default:
+                game_logic (snake_world,last_pressed_valid_key);
+        }
         admin_display_world (background,snake_world,width,high);
         delay(options_files);
     }	
@@ -103,15 +129,26 @@ static void delay (FILE *options_files)
 static void    admin_display_world  (ALLEGRO_BITMAP *background, uint16_t snake_world [MAX_SIZE_X][MAX_SIZE_Y], uint16_t width, uint16_t high)
 {
     uint16_t i,j;
+    ALLEGRO_COLOR color = al_map_rgb (0,0,0);
+    ALLEGRO_COLOR color1 = al_map_rgb (255,0,0);
+    ALLEGRO_COLOR color2 = al_map_rgb (0,0,255);
     
     display_world (background,width,high);
     for(i = MIN_WORLD_WIDTH; i <= MAX_WORLD_WIDTH; i++)			
     {
         for(j = MIN_WORLD_HIGH; j <= MAX_WORLD_HIGH; j++)
         {
-            if(snake_world[i][j] != EMPTY_SPACE)
+            if(snake_world[i][j] >= SNAKE_HEAD && snake_world[i][j] <= END_OF_SNAKE)
             {
-                display_snake (background,snake_world [i][j],width,high,SNAKE_HEAD,i,j,MAX_WORLD_WIDTH,MAX_WORLD_HIGH);
+                display_snake (background,snake_world [i][j],width,high,SNAKE_HEAD,i,j,MAX_WORLD_WIDTH,MAX_WORLD_HIGH,color);
+            }
+            else if (snake_world[i][j] == SNAKE_FOOD)
+            {
+                display_snake (background,snake_world [i][j],width,high,SNAKE_HEAD,i,j,MAX_WORLD_WIDTH,MAX_WORLD_HIGH,color1);
+            }
+            else if (snake_world[i][j] == WALL)
+            {
+                display_snake (background,snake_world [i][j],width,high,SNAKE_HEAD,i,j,MAX_WORLD_WIDTH,MAX_WORLD_HIGH,color2);
             }
         }
     }
@@ -127,3 +164,15 @@ static void    admin_display_world  (ALLEGRO_BITMAP *background, uint16_t snake_
 
 }
   
+
+static uint32_t check_key (uint32_t key, uint32_t last_pressed_valid_key)
+{
+    if ((key == ALLEGRO_KEY_RIGHT || key == ALLEGRO_KEY_LEFT) && (last_pressed_valid_key == RIGHT || last_pressed_valid_key == LEFT))
+    {
+        return ANY_KEY;
+    }
+    else if ((key == ALLEGRO_KEY_DOWN || key == ALLEGRO_KEY_UP) && (last_pressed_valid_key == UP || last_pressed_valid_key == DOWN))
+    {
+        return ANY_KEY;
+    }
+}

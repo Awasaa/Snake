@@ -40,7 +40,7 @@ void    display_menu        (ALLEGRO_BITMAP *, ALLEGRO_FONT *, ALLEGRO_FONT *, u
 void    display_best_score  (ALLEGRO_BITMAP *, ALLEGRO_FONT *, ALLEGRO_FONT *, ALLEGRO_FONT *, uint16_t, uint16_t, uint8_t*, uint8_t*, uint8_t*);
 void    display_options     (ALLEGRO_BITMAP *, ALLEGRO_FONT *, ALLEGRO_FONT *, ALLEGRO_FONT *, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint8_t*, uint8_t*, uint8_t*, uint8_t*);
 void    display_world       (ALLEGRO_BITMAP *, uint16_t, uint16_t);
-void    display_snake       (ALLEGRO_BITMAP *, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t); //estra el mundo en el display
+void    display_snake       (ALLEGRO_BITMAP *, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, ALLEGRO_COLOR); //estra el mundo en el display
 
 
 
