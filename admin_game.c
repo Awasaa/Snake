@@ -20,7 +20,7 @@
 static uint8_t  create_display       (ALLEGRO_DISPLAY *, uint16_t, uint16_t);
 static void     get_resolution       (FILE *, uint16_t *,uint16_t *);
 static void     delay                (FILE *);
-static void     admin_display_world  (ALLEGRO_BITMAP *, uint16_t [MAX_SIZE_X][MAX_SIZE_Y], uint16_t, uint16_t);
+static void     admin_display_world  ( uint16_t [MAX_SIZE_X][MAX_SIZE_Y], uint16_t, uint16_t);
 static uint32_t check_key            (uint32_t, uint32_t);
 
 uint8_t admin_game (FILE *options_files, FILE *best_scores,ALLEGRO_EVENT_QUEUE *event_queue)
@@ -35,13 +35,7 @@ uint8_t admin_game (FILE *options_files, FILE *best_scores,ALLEGRO_EVENT_QUEUE *
     
     get_resolution (options_files,&width,&high);
     create_display (display,width,high);
-    if(!(background = al_load_bitmap ("grass.jpg")))
-    {
-        fprintf(stderr,"Creacion de fondo fallida \n");  ///Mensaje de error al usuario
-        al_destroy_bitmap(background);    //destruye el bitmap del logo
-        return 1;  //Condicion de salida con error
-    }
-    else if (!(event_queue = al_create_event_queue()))
+     if (!(event_queue = al_create_event_queue()))
     {
         fprintf(stderr, "Creacion de fila de eventos fallida \n");
         al_destroy_event_queue(event_queue);
@@ -79,7 +73,7 @@ uint8_t admin_game (FILE *options_files, FILE *best_scores,ALLEGRO_EVENT_QUEUE *
             default:
                 game_logic (snake_world,last_pressed_valid_key,&last_pressed_valid_key);
         }
-        admin_display_world (background,snake_world,width,high);
+        admin_display_world (snake_world,width,high);
         delay(options_files);
     }	
     while ( key != ALLEGRO_KEY_ESCAPE );
@@ -126,17 +120,24 @@ static void delay (FILE *options_files)
 }
 
 
-static void    admin_display_world  (ALLEGRO_BITMAP *background, uint16_t snake_world [MAX_SIZE_X][MAX_SIZE_Y], uint16_t width, uint16_t high)
+static void    admin_display_world  ( uint16_t snake_world [MAX_SIZE_X][MAX_SIZE_Y], uint16_t width, uint16_t high)
 {
     uint16_t i,j;
+    ALLEGRO_BITMAP  *background = NULL;
     ALLEGRO_COLOR color = al_map_rgb (0,0,0);
     ALLEGRO_COLOR color1 = al_map_rgb (255,0,0);
     ALLEGRO_COLOR color2 = al_map_rgb (0,0,255);
     
-    display_world (background,width,high);
-    for(i = MIN_WORLD_WIDTH; i <= MAX_WORLD_WIDTH+2; i++)			
+    if(!(background = al_load_bitmap ("grass.jpg")))
     {
-        for(j = MIN_WORLD_HIGH; j <= MAX_WORLD_HIGH+2; j++)
+        fprintf(stderr,"Creacion de fondo fallida \n");  ///Mensaje de error al usuario
+        al_destroy_bitmap(background);    //destruye el bitmap del logo
+        //return 1;  //Condicion de salida con error
+    }
+    display_world (background,width,high);
+    for(i = MIN_WORLD_WIDTH; i <= MAX_WORLD_WIDTH; i++)			
+    {
+        for(j = MIN_WORLD_HIGH; j <= MAX_WORLD_HIGH; j++)
         {
             if(snake_world[i][j] >= SNAKE_HEAD && snake_world[i][j] <= END_OF_SNAKE)
             {
@@ -160,7 +161,8 @@ static void    admin_display_world  (ALLEGRO_BITMAP *background, uint16_t snake_
 		 	printf (" %d ",snake_world [i][j]);   
       		 }
 	printf ("\n");
-	}*/		
+	}*/
+    al_destroy_bitmap(background);
 
 }
   
