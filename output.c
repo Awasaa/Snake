@@ -49,6 +49,20 @@ void display_menu (ALLEGRO_BITMAP *menu, ALLEGRO_FONT *titulo, ALLEGRO_FONT *opc
     al_flip_display();
 }
 
+void display_exit_message (ALLEGRO_FONT *opciones)
+{
+    ALLEGRO_COLOR gris_claro = al_map_rgb(150,150,150);
+    ALLEGRO_COLOR negro      = al_map_rgb(0,0,0);
+    ALLEGRO_COLOR rojo       = al_map_rgb(255,0,0);
+    
+    al_draw_filled_rectangle (RECTANGLE_X1, RECTANGLE_Y1, RECTANGLE_X2, RECTANGLE_Y2, gris_claro);
+    al_draw_text (opciones, negro, MIDDLE_DISPLAY_W, DISPLAY_H*0.4,ALLEGRO_ALIGN_CENTRE, "Seguro desea salir?");
+    al_draw_text (opciones, negro, MIDDLE_DISPLAY_W, DISPLAY_H*0.47,ALLEGRO_ALIGN_CENTRE, "Snake morira :_(");
+    al_draw_text (opciones, rojo , MIDDLE_DISPLAY_W, DISPLAY_H*0.59,ALLEGRO_ALIGN_CENTRE, "SI(enter)      NO(escape)");
+
+    al_flip_display();
+}
+
 void display_best_score (ALLEGRO_BITMAP *fondo, ALLEGRO_FONT *titulo, ALLEGRO_FONT *ganadores, ALLEGRO_FONT *mensaje,  uint16_t width, uint16_t high, uint8_t *score1, uint8_t *score2, uint8_t *score3)
 {
     ALLEGRO_COLOR negro = al_map_rgb(0,0,0);
@@ -89,10 +103,23 @@ void display_world (ALLEGRO_BITMAP *background,uint16_t width, uint16_t high)
 
 
 
-void display_snake(ALLEGRO_BITMAP *background,uint16_t body_part, uint16_t width, uint16_t high, uint16_t snake_head, uint16_t pos_y, uint16_t pos_x, uint16_t div_x, uint16_t div_y,ALLEGRO_COLOR color)
+void display_snake (ALLEGRO_BITMAP *background,uint16_t body_part, uint16_t width, uint16_t high, uint16_t snake_head, uint16_t pos_y, uint16_t pos_x, uint16_t div_x, uint16_t div_y,ALLEGRO_COLOR color)
 { 
     al_draw_filled_circle   (((width/div_x)*pos_x)/2 , ((high/div_y)*pos_y)/2 , (high/div_y)/2 , color);
     al_flip_display();    
+}
+
+void display_pause_menu (ALLEGRO_BITMAP *pause, ALLEGRO_FONT *opciones, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3)
+{
+    ALLEGRO_COLOR azul = al_map_rgb(0,0,255);
+    ALLEGRO_COLOR negro = al_map_rgb(0,0,0);
+    
+    al_draw_scaled_bitmap (pause,0,0,al_get_bitmap_width(pause),al_get_bitmap_height(pause),500,300,500,300,0);
+    al_draw_text  (opciones, negro, MIDDLE_DISPLAY_W, DISPLAY_H*0.5,ALLEGRO_ALIGN_CENTRE, "REANUDAR");
+    al_draw_text  (opciones, negro, MIDDLE_DISPLAY_W, DISPLAY_H*0.6,ALLEGRO_ALIGN_CENTRE, "VOLVER AL MENU INICIO");
+    al_draw_text  (opciones, negro, MIDDLE_DISPLAY_W, DISPLAY_H*0.7,ALLEGRO_ALIGN_CENTRE, "SALIR DEL JUEGO");
+    al_draw_filled_triangle(x1, y1, x2, y2, x3, y3, azul);
+    al_flip_display();
 }
 
 

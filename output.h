@@ -31,17 +31,24 @@
 #define TRIAN_POINT_Y1_TWO_STEP  (TRIAN_POINT_Y1+LINE_DISTANCE*2)
 #define TRIAN_POINT_Y1_EXT_DOWN  (TRIAN_POINT_Y1+LINE_DISTANCE*3)
 #define LINE_DISTANCE            (DISPLAY_H/10)
+#define MIDDLE_DISPLAY_W         (DISPLAY_W/2)
+#define MIDDLE_DISPLAY_H         (DISPLAY_H/2)
+#define RECTANGLE_X1             (DISPLAY_W/2-DISPLAY_W*0.3)
+#define RECTANGLE_Y1             (DISPLAY_H/2-DISPLAY_H*0.2)
+#define RECTANGLE_X2             (DISPLAY_W/2+DISPLAY_W*0.3)
+#define RECTANGLE_Y2             (DISPLAY_H/2+DISPLAY_H*0.2)
 
 
 
-void    display_logo        (ALLEGRO_BITMAP *, ALLEGRO_FONT *, uint16_t, uint16_t);  //Pone en pantalla el diseño del logo
-void    display_info        (ALLEGRO_BITMAP *, ALLEGRO_FONT *, ALLEGRO_FONT *, ALLEGRO_FONT *, uint16_t, uint16_t);
-void    display_menu        (ALLEGRO_BITMAP *, ALLEGRO_FONT *, ALLEGRO_FONT *, uint16_t, uint16_t,uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t);
-void    display_best_score  (ALLEGRO_BITMAP *, ALLEGRO_FONT *, ALLEGRO_FONT *, ALLEGRO_FONT *, uint16_t, uint16_t, uint8_t*, uint8_t*, uint8_t*);
-void    display_options     (ALLEGRO_BITMAP *, ALLEGRO_FONT *, ALLEGRO_FONT *, ALLEGRO_FONT *, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint8_t*, uint8_t*, uint8_t*, uint8_t*);
-void    display_world       (ALLEGRO_BITMAP *, uint16_t, uint16_t);
-void    display_snake       (ALLEGRO_BITMAP *, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, ALLEGRO_COLOR); //estra el mundo en el display
-
+void    display_logo         (ALLEGRO_BITMAP *, ALLEGRO_FONT *, uint16_t, uint16_t);  //Pone en pantalla el diseño del logo
+void    display_info         (ALLEGRO_BITMAP *, ALLEGRO_FONT *, ALLEGRO_FONT *, ALLEGRO_FONT *, uint16_t, uint16_t);
+void    display_menu         (ALLEGRO_BITMAP *, ALLEGRO_FONT *, ALLEGRO_FONT *, uint16_t, uint16_t,uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t);
+void    display_exit_message (ALLEGRO_FONT *);
+void    display_best_score   (ALLEGRO_BITMAP *, ALLEGRO_FONT *, ALLEGRO_FONT *, ALLEGRO_FONT *, uint16_t, uint16_t, uint8_t*, uint8_t*, uint8_t*);
+void    display_options      (ALLEGRO_BITMAP *, ALLEGRO_FONT *, ALLEGRO_FONT *, ALLEGRO_FONT *, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint8_t*, uint8_t*, uint8_t*, uint8_t*);
+void    display_world        (ALLEGRO_BITMAP *, uint16_t, uint16_t);
+void    display_snake        (ALLEGRO_BITMAP *, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, ALLEGRO_COLOR); //estra el mundo en el display
+void    display_pause_menu   (ALLEGRO_BITMAP *, ALLEGRO_FONT *,uint16_t, uint16_t, uint16_t, uint16_t, uint16_t, uint16_t);
 
 
 #endif /* OUTPUT_H */

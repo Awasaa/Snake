@@ -22,6 +22,7 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
 
+#define ANY_KEY     (ALLEGRO_KEY_F)
 #define LOOP_EXIT   (2)
 #define GAME_EXIT   (1)
 

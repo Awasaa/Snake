@@ -20,9 +20,12 @@
 #include <allegro5/allegro.h>
 #include <allegro5/allegro_primitives.h>
 
-#define U_DELAY   (300000)   //0.3 seg  
-#define ANY_KEY   ALLEGRO_KEY_F
+#define U_DELAY      (300000)   //0.3 seg  
+#define ANY_KEY      (ALLEGRO_KEY_F)
+#define RESUME       (1)
+#define QUIT_GAME    (2)
+#define BACK_TO_MENU (3)
 
-uint8_t admin_game (FILE *, FILE *,ALLEGRO_EVENT_QUEUE *);
+uint32_t admin_game (FILE *, FILE *,ALLEGRO_EVENT_QUEUE *);
 
 #endif /* ADMIN_GAME_H */

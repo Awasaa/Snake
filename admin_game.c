@@ -17,13 +17,16 @@
 #include "file_admin.h"
 #include "input.h"
 
-static uint8_t  create_display       (ALLEGRO_DISPLAY *, uint16_t, uint16_t);
-static void     get_resolution       (FILE *, uint16_t *,uint16_t *);
-static void     delay                (FILE *);
-static void     admin_display_world  ( uint16_t [MAX_SIZE_X][MAX_SIZE_Y], uint16_t, uint16_t);
-static uint32_t check_key            (uint32_t, uint32_t);
+static uint8_t  create_display           (ALLEGRO_DISPLAY *, uint16_t, uint16_t);
+static void     get_resolution           (FILE *, uint16_t *,uint16_t *);
+static void     delay                    (FILE *);
+static void     admin_display_world      (uint16_t [MAX_SIZE_X][MAX_SIZE_Y], uint16_t, uint16_t);
+static uint32_t check_key                (uint32_t, uint32_t);
+static uint32_t pause_menu               (ALLEGRO_EVENT_QUEUE *);
+static void     move_pause_menu_pointer  (uint16_t *, uint16_t *, uint16_t *, uint32_t);
+static uint32_t admin_pause_menu         (uint16_t *);
 
-uint8_t admin_game (FILE *options_files, FILE *best_scores,ALLEGRO_EVENT_QUEUE *event_queue)
+uint32_t admin_game (FILE *options_files, FILE *best_scores,ALLEGRO_EVENT_QUEUE *event_queue)
 {
     ALLEGRO_DISPLAY *display = NULL;
     ALLEGRO_BITMAP  *background = NULL;
@@ -48,10 +51,10 @@ uint8_t admin_game (FILE *options_files, FILE *best_scores,ALLEGRO_EVENT_QUEUE *
     do
     {
         key = get_keyboard(event_queue);
-        if ((key = check_key (key,last_pressed_valid_key)) == ANY_KEY)
-        {
-            al_flush_event_queue(event_queue);
-        }
+        //if ((key = check_key (key,last_pressed_valid_key)) == ANY_KEY)
+        //{
+         //   al_flush_event_queue(event_queue);
+        //}
         switch (key)
         {
             case (ALLEGRO_KEY_RIGHT) :
@@ -69,14 +72,19 @@ uint8_t admin_game (FILE *options_files, FILE *best_scores,ALLEGRO_EVENT_QUEUE *
             case (ALLEGRO_KEY_UP) :
                 game_logic (snake_world,UP,&last_pressed_valid_key);
                 last_pressed_valid_key = UP;
-                break;   
+                break;  
+            case (ALLEGRO_KEY_ESCAPE):
+                key = pause_menu(event_queue);
+                break;
             default:
                 game_logic (snake_world,last_pressed_valid_key,&last_pressed_valid_key);
         }
         admin_display_world (snake_world,width,high);
         delay(options_files);
     }	
-    while ( key != ALLEGRO_KEY_ESCAPE );
+    while (key != BACK_TO_MENU && key != QUIT_GAME);
+    
+    return key; 
 }
 
 static uint8_t create_display (ALLEGRO_DISPLAY *display,uint16_t width, uint16_t high)
@@ -176,5 +184,86 @@ static uint32_t check_key (uint32_t key, uint32_t last_pressed_valid_key)
     else if ((key == ALLEGRO_KEY_DOWN || key == ALLEGRO_KEY_UP) && (last_pressed_valid_key == UP || last_pressed_valid_key == DOWN))
     {
         return ANY_KEY;
+    }
+}
+
+static uint32_t pause_menu (ALLEGRO_EVENT_QUEUE *event_queue)
+{
+    ALLEGRO_FONT *opciones = NULL;
+    ALLEGRO_BITMAP *pause = NULL;
+    
+    uint32_t key;
+    uint16_t x1 = TRIAN_POINT_X1, y1 = TRIAN_POINT_Y1; 
+    uint16_t x2 = TRIAN_POINT_X2, y2 = TRIAN_POINT_Y2;
+    uint16_t x3 = TRIAN_POINT_X3, y3 = TRIAN_POINT_Y3;
+  
+    if(!(opciones = al_load_ttf_font("SuperMario256.ttf",20,0)))  //Elijo la fuente deseada
+    {
+        fprintf(stderr,"Creacion de fuente erronea \n");
+        al_destroy_font(opciones);
+        return 1;
+    }
+    else if(!(pause = al_load_bitmap ("grass.jpg")))
+    {
+        fprintf(stderr,"Creacion de fondo fallida \n");  ///Mensaje de error al usuario
+        al_destroy_bitmap(pause);    //destruye el bitmap del logo
+        al_destroy_font(opciones);
+        return 1;  //Condicion de salida con error
+    }
+    do
+    {
+        key = get_keyboard (event_queue);
+        switch (key)
+        {
+            case (ALLEGRO_KEY_DOWN):
+                move_pause_menu_pointer (&y1,&y2,&y3,key);
+                display_pause_menu (pause,opciones,x1,y1,x2,y2,x3,y3);
+                break;
+            case (ALLEGRO_KEY_UP):
+                move_pause_menu_pointer (&y1,&y2,&y3,key);
+                display_pause_menu (pause,opciones,x1,y1,x2,y2,x3,y3);
+                break; 
+            case (ALLEGRO_KEY_ENTER):
+                key = admin_pause_menu (&y1);
+                break;
+            default:
+                display_pause_menu (pause,opciones,x1,y1,x2,y2,x3,y3);
+                break;    
+        }
+    }
+    while (key != RESUME && key != QUIT_GAME && key != BACK_TO_MENU);
+    
+    return key;   
+}
+
+static void move_pause_menu_pointer (uint16_t *y1, uint16_t *y2, uint16_t *y3, uint32_t key)
+{
+    if (key == ALLEGRO_KEY_UP && *y1 != TRIAN_POINT_Y1)
+    {
+        *y1 -= LINE_DISTANCE;
+        *y2 -= LINE_DISTANCE;
+        *y3 -= LINE_DISTANCE;
+    }
+    else if (key == ALLEGRO_KEY_DOWN && *y1 != TRIAN_POINT_Y1_EXT_DOWN)
+    {
+        *y1 += LINE_DISTANCE;
+        *y2 += LINE_DISTANCE;
+        *y3 += LINE_DISTANCE;
+    }   
+}
+
+static uint32_t admin_pause_menu (uint16_t *y_pos)
+{
+    if (*y_pos == TRIAN_POINT_Y1)
+    {
+        return (RESUME);
+    }
+    else if (*y_pos == TRIAN_POINT_Y1_ONE_STEP)
+    {
+        return (BACK_TO_MENU) ;
+    }
+    else if (*y_pos == TRIAN_POINT_Y1_TWO_STEP)
+    {
+        return (QUIT_GAME);
     }
 }

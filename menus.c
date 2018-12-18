@@ -27,6 +27,7 @@ static void      switch_music       (FILE *);
 static void      switch_level       (FILE *);
 static void      switch_resolution  (FILE *);
 static void      switch_snake_color (FILE *);
+static uint8_t   check_exit         (ALLEGRO_EVENT_QUEUE *, ALLEGRO_FONT *);
 
 
 uint8_t create_menu (ALLEGRO_DISPLAY *display, ALLEGRO_FONT *titulo, \
@@ -144,7 +145,14 @@ static uint32_t admin_submenu (ALLEGRO_FONT *titulo, ALLEGRO_FONT *opciones, ALL
         }
         else if (*y_pos == TRIAN_POINT_Y1_EXT_DOWN)
         {
-            return (GAME_EXIT);
+            if(check_exit (event,opciones))
+            {
+                return (GAME_EXIT);
+            }
+            else
+            {
+                return (ANY_KEY);
+            }
         }   
 }
 
@@ -347,4 +355,25 @@ static void   switch_snake_color (FILE *options_files)
        modify_config (FILE_SNAKE_COLOR,options_files,COLOR_1); 
     } 
     
+}
+
+static uint8_t check_exit (ALLEGRO_EVENT_QUEUE *event, ALLEGRO_FONT *opciones)
+{
+    uint32_t key;
+    
+    display_exit_message(opciones);
+    do
+    {
+        key = get_keyboard (event);
+    }
+    while (key != ALLEGRO_KEY_ENTER && key != ALLEGRO_KEY_ESCAPE);
+    
+    if (key == ALLEGRO_KEY_ENTER)
+    {
+        return 1;
+    }
+    else
+    {
+       return 0; 
+    }
 }

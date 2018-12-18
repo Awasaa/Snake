@@ -19,14 +19,24 @@ int main(int argc, char** argv)
     ALLEGRO_FONT *font0 = NULL, *font1 = NULL, *font2 = NULL;  //declaro la fuente
     ALLEGRO_EVENT_QUEUE *event = NULL;
     
+    uint32_t do_exit;
     
     if(!init_allegro() && !create_intro(snake_game,font0,font1,font2))      //Inicializa los servicios de allegro
-    {                                                                       //Crea el display, el logo y la presentacion
-        if(!(create_menu(snake_game,font0,font1,font2,event,options_files,best_scores) == GAME_EXIT))
-        {   
-            admin_game(options_files,best_scores,event);
+    {                       //Crea el display, el logo y la presentacion
+        do
+        {
+            if(!(create_menu(snake_game,font0,font1,font2,event,options_files,best_scores) == GAME_EXIT))
+            {   
+                do_exit = admin_game(options_files,best_scores,event);
+            }
+            else
+            {
+                do_exit = QUIT_GAME;
+            }
         }
+        while (do_exit != QUIT_GAME); 
     }
+    
     al_destroy_display (snake_game);
     al_destroy_font (font0);
     al_destroy_font (font1);
