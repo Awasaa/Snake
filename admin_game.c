@@ -161,6 +161,7 @@ static void    admin_display_world  ( uint16_t snake_world [MAX_SIZE_X][MAX_SIZE
             }
         }
     }
+    al_flip_display();
   
 	/*for (i=1; i<20;i++)
     	{

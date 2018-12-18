@@ -39,6 +39,7 @@ void display_menu (ALLEGRO_BITMAP *menu, ALLEGRO_FONT *titulo, ALLEGRO_FONT *opc
     ALLEGRO_COLOR negro = al_map_rgb(0,0,0);
     ALLEGRO_COLOR rojo = al_map_rgb(255,0,0);
     
+    al_clear_to_color(negro);
     al_draw_scaled_bitmap (menu,0,0,al_get_bitmap_width(menu),al_get_bitmap_height(menu),0,0,width,high,0);
     al_draw_text (titulo, negro, width/2, high/10,ALLEGRO_ALIGN_CENTRE, "SNAKE");
     al_draw_text (opciones, negro, width/2, high*0.5,ALLEGRO_ALIGN_CENTRE, "Jugar");
@@ -105,8 +106,8 @@ void display_world (ALLEGRO_BITMAP *background,uint16_t width, uint16_t high)
 
 void display_snake (ALLEGRO_BITMAP *background,uint16_t body_part, uint16_t width, uint16_t high, uint16_t snake_head, uint16_t pos_y, uint16_t pos_x, uint16_t div_x, uint16_t div_y,ALLEGRO_COLOR color)
 { 
-    al_draw_filled_circle   (((width/div_x)*pos_x)/2 , ((high/div_y)*pos_y)/2 , (high/div_y)/2 , color);
-    al_flip_display();    
+    al_draw_filled_circle   (((width/div_x)/2)+(pos_x*div_x) , ((high/div_y)/2)+(pos_y*div_y) , (high/div_y)/2.02 , color);
+    //al_flip_display();    
 }
 
 void display_pause_menu (ALLEGRO_BITMAP *pause, ALLEGRO_FONT *opciones, uint16_t x1, uint16_t y1, uint16_t x2, uint16_t y2, uint16_t x3, uint16_t y3)
