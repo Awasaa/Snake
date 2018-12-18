@@ -14,6 +14,8 @@
 #include <allegro5/allegro_font.h> 
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_primitives.h>
+#include <allegro5/allegro_audio.h> // NO OLVIDAR AGREGAR EN EL LINKER DEL PROYECTO
+#include <allegro5/allegro_acodec.h>
 
 
 uint8_t         init_allegro    (void);     //Funcion que inicializa todas los sistemas de allegro que se utilizaran

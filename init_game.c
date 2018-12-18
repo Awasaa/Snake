@@ -43,6 +43,22 @@ uint8_t init_allegro (void)
         al_shutdown_image_addon;    //Destruye el sistema de imagen
         return 1;
     }
+    else if(!al_install_audio())
+    {
+      fprintf(stderr, "failed to initialize audio!\n");
+      return 1;
+    }
+   if(!al_init_acodec_addon())
+    {
+      fprintf(stderr, "failed to initialize audio codecs!\n");
+      return 1;
+    }
+ 
+   if (!al_reserve_samples(1))
+    {
+      fprintf(stderr, "failed to reserve samples!\n");
+      return 1;
+    }
     
     al_init_font_addon();   //Inicializo el sistema para la fuente
     al_init_ttf_addon();    //Inicializo el "true type font" 
@@ -91,6 +107,7 @@ uint8_t create_intro (ALLEGRO_DISPLAY *display, ALLEGRO_FONT *titulo, ALLEGRO_FO
 
 static uint8_t create_display (ALLEGRO_DISPLAY *display)
 {
+    al_set_new_display_flags(ALLEGRO_FULLSCREEN_WINDOW);
     if (!(display = al_create_display (DISPLAY_W, DISPLAY_H))) //Creo el display con medidas "DISPLAY_W" y "DISPLAY_H"
     {
         fprintf (stderr, "Creacion de display erronea \n");    //Mensaje de error al usuario

@@ -7,7 +7,7 @@
 #include "snake_world.h"
 
 static uint16_t* search_for_in_world  (uint16_t [MAX_SIZE_X][MAX_SIZE_Y], uint16_t);
-static uint8_t   admin_move           (uint16_t [MAX_SIZE_X][MAX_SIZE_Y],uint16_t * ,uint16_t *,uint16_t *,uint16_t,uint32_t);
+static uint8_t   admin_move           (uint16_t [MAX_SIZE_X][MAX_SIZE_Y],uint16_t * ,uint16_t *,uint16_t *,uint16_t,uint32_t,uint32_t *);
 static uint8_t   move_snake_head      (uint16_t* , uint16_t);
 static void      move_snake_body      (uint16_t*, uint16_t);
 static void      put_food             (uint16_t [MAX_SIZE_X][MAX_SIZE_Y]);
@@ -16,16 +16,18 @@ static uint8_t   check_crash          (uint16_t*);
 
 
 
-void game_logic (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y], uint32_t direction, uint32_t *last_pressed_valid_key)
+void game_logic (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y], uint32_t direction, uint32_t *last_pressed_valid_key, uint8_t *snake_life, uint32_t *score)
 {
     uint16_t *snake_head_first_ubication = NULL, *previous_body_part_ubication = NULL;
     uint16_t *body_part_ubication = NULL;
     uint16_t  body_part = SNAKE_HEAD ;
     
-    if (admin_move (snake_world,snake_head_first_ubication,previous_body_part_ubication,body_part_ubication,body_part,direction))
+    if (admin_move (snake_world,snake_head_first_ubication,previous_body_part_ubication,body_part_ubication,body_part,direction,score))
     {
         create_world(snake_world);
         *last_pressed_valid_key = RIGHT;
+        (*snake_life)--;
+        (*score) = 0;
     }
     put_food (snake_world);
 }
@@ -73,7 +75,7 @@ static uint16_t* search_for_in_world (uint16_t snake_world [MAX_SIZE_X][MAX_SIZE
     return part_pos;
 }
 
-static uint8_t admin_move (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y],uint16_t *snake_head_first_ubication ,uint16_t *previous_body_part_ubication,uint16_t *body_part_ubication,uint16_t body_part,uint32_t direction)
+static uint8_t admin_move (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y],uint16_t *snake_head_first_ubication ,uint16_t *previous_body_part_ubication,uint16_t *body_part_ubication,uint16_t body_part,uint32_t direction,uint32_t *score)
 {
     bool crash = false;
     uint16_t event = false, cont = 1;
@@ -104,10 +106,11 @@ static uint8_t admin_move (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y],uint16_t
                     if (event == ATE && body_part == END_OF_SNAKE)
                     {
                         move_snake_body (previous_body_part_ubication,cont);
+                        (*score) += SCORE_VALUE;
                     }
                     else
                     {
-                    move_snake_body (previous_body_part_ubication,body_part);
+                        move_snake_body (previous_body_part_ubication,body_part);
                     }
                 }  
                 previous_body_part_ubication = body_part_ubication;
@@ -211,7 +214,7 @@ static uint8_t check_next_step (uint16_t* next_pos)
 static uint8_t check_crash (uint16_t* next_pos)
 {
     bool crash;
-    if ((*next_pos) == WALL || ((*next_pos) > SNAKE_HEAD && (*next_pos) < END_OF_SNAKE))
+    if ((*next_pos) == WALL || ((*next_pos) > SNAKE_HEAD && (*next_pos) <= END_OF_SNAKE))
     {
         crash = true;
     }
