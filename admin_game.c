@@ -22,7 +22,7 @@ static void             get_resolution           (FILE *, uint16_t *,uint16_t *)
 static uint32_t         get_level                (FILE *);
 static ALLEGRO_COLOR    get_color                (FILE *);
 static uint8_t          is_music_set             (FILE *);
-static uint32_t         game_loop                (ALLEGRO_FONT *,ALLEGRO_EVENT_QUEUE *, uint32_t,uint32_t ,uint8_t , uint32_t , uint16_t ,uint16_t , ALLEGRO_COLOR , uint16_t  [MAX_SIZE_X][MAX_SIZE_Y], uint32_t);
+static uint32_t         game_loop                (ALLEGRO_FONT *,ALLEGRO_EVENT_QUEUE *, uint32_t,uint32_t ,uint8_t , uint32_t , uint16_t ,uint16_t , ALLEGRO_COLOR , uint16_t  [MAX_SIZE_X][MAX_SIZE_Y], uint32_t,FILE *);
 static void             delay                    (uint32_t, uint32_t);
 static void             admin_display_world      (ALLEGRO_FONT *, uint16_t [MAX_SIZE_X][MAX_SIZE_Y], uint16_t, uint16_t,ALLEGRO_COLOR,uint32_t,uint8_t);
 static uint32_t         check_key                (uint32_t, uint32_t);
@@ -30,6 +30,7 @@ static uint32_t         pause_menu               (ALLEGRO_FONT *, ALLEGRO_EVENT_
 static void             move_pause_menu_pointer  (uint16_t *, uint16_t *, uint16_t *, uint32_t);
 static uint32_t         admin_pause_menu         (uint16_t *,ALLEGRO_EVENT_QUEUE *,ALLEGRO_FONT *);
 static uint8_t          check_exit               (ALLEGRO_EVENT_QUEUE *, ALLEGRO_FONT *);
+static void             save_scores              (FILE *,uint32_t);          
 
 uint32_t admin_game (FILE *options_files, FILE *best_scores,ALLEGRO_EVENT_QUEUE *event_queue)
 {
@@ -82,7 +83,7 @@ uint32_t admin_game (FILE *options_files, FILE *best_scores,ALLEGRO_EVENT_QUEUE 
     srand(time(NULL));
     create_world (snake_world);
     key = game_loop (opciones,event_queue,key,last_pressed_valid_key,snake_life,score,\
-                     width,high,color,snake_world,speed);
+                     width,high,color,snake_world,speed,best_scores);
     
     return key; 
 }
@@ -192,7 +193,8 @@ static uint32_t game_loop (ALLEGRO_FONT *opciones,ALLEGRO_EVENT_QUEUE *event_que
                            uint32_t key, uint32_t last_pressed_valid_key, \
                            uint8_t snake_life, uint32_t score, uint16_t width, \
                            uint16_t high, ALLEGRO_COLOR color, \
-                           uint16_t snake_world [MAX_SIZE_X][MAX_SIZE_Y], uint32_t speed)
+                           uint16_t snake_world [MAX_SIZE_X][MAX_SIZE_Y], uint32_t speed, \
+                           FILE *best_scores)
 {
     do
     {
@@ -233,6 +235,7 @@ static uint32_t game_loop (ALLEGRO_FONT *opciones,ALLEGRO_EVENT_QUEUE *event_que
         }
         if (!snake_life)
         {
+            save_scores (best_scores,score);
             display_end(opciones,"PERDISTE :(",width,high);
             key = BACK_TO_MENU;
         }
@@ -415,5 +418,36 @@ static uint8_t check_exit (ALLEGRO_EVENT_QUEUE *event, ALLEGRO_FONT *opciones)
     else
     {
        return 0; 
+    }
+}
+
+
+static void save_scores (FILE *best_scores,uint32_t score)
+{
+    uint8_t score1[MAX_LENGHT];
+    uint8_t score2[MAX_LENGHT];
+    uint8_t score3[MAX_LENGHT];
+    uint8_t score_array [MAX_LENGHT];
+    
+    read_config (SCORE_1,best_scores,score1);
+    read_config (SCORE_2,best_scores,score2);
+    read_config (SCORE_3,best_scores,score3);
+    sprintf (score_array,"%d",score);
+    
+    printf ("%d\n",atoi(score1));
+    printf ("%d\n",score);
+    
+    if (score > (atoi(score1)))
+    {
+        
+        modify_config(SCORE_1,best_scores,score_array);
+    }
+    else if (score > (atoi(score2)))
+    {
+        modify_config(SCORE_2,best_scores,score_array); 
+    }
+    else if (score > (atoi(score3)))
+    {
+        modify_config(SCORE_3,best_scores,score_array);
     }
 }

@@ -49,3 +49,5 @@ uint8_t modify_config (uint8_t *file_name, FILE *file, uint8_t array_to_write[])
     fclose (file);
     return 0;
 }
+
+

@@ -36,6 +36,7 @@
 #define INDIANA_JONES (100000)
 #define MODO_DIABLO   (50000)
 #define MIN_DELAY     (1000)
+#define DECIMAL       (10)
 
 
 uint32_t admin_game (FILE *, FILE *,ALLEGRO_EVENT_QUEUE *);

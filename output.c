@@ -121,7 +121,7 @@ void display_pause_menu (ALLEGRO_BITMAP *pause, ALLEGRO_FONT *opciones, uint16_t
     ALLEGRO_COLOR azul = al_map_rgb(0,0,255);
     ALLEGRO_COLOR negro = al_map_rgb(0,0,0);
     
-    al_draw_scaled_bitmap (pause,0,0,al_get_bitmap_width(pause),al_get_bitmap_height(pause),(width/2)-(width*0.3),(high/2)-(high*0.3),width * 0.6,high*0.7,0);
+    al_draw_scaled_bitmap (pause,0,0,al_get_bitmap_width(pause),al_get_bitmap_height(pause),(width/2)-(width*0.4),(high/2)-(high*0.3),width * 0.8,high*0.8,0);
     al_draw_text  (opciones, negro, MIDDLE_DISPLAY_W, DISPLAY_H*0.5,ALLEGRO_ALIGN_CENTRE, "REANUDAR");
     al_draw_text  (opciones, negro, MIDDLE_DISPLAY_W, DISPLAY_H*0.6,ALLEGRO_ALIGN_CENTRE, "VOLVER AL MENU INICIO");
     al_draw_text  (opciones, negro, MIDDLE_DISPLAY_W, DISPLAY_H*0.7,ALLEGRO_ALIGN_CENTRE, "SALIR DEL JUEGO");

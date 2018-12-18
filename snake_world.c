@@ -27,7 +27,7 @@ void game_logic (uint16_t snake_world[MAX_SIZE_X][MAX_SIZE_Y], uint32_t directio
         create_world(snake_world);
         *last_pressed_valid_key = RIGHT;
         (*snake_life)--;
-        (*score) = 0;
+        //(*score) = 0;   //
     }
     put_food (snake_world);
 }
